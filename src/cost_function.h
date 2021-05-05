@@ -9,4 +9,4 @@
  *
  */
 
-int cost_function(double* X, double* y, float theta, int m);
+double cost_function(double* X, double* y, float theta, int m);
