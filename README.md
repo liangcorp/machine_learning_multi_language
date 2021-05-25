@@ -1,2 +1,3 @@
-# machine_learning_c
-Machine Learning Algorithms Written in C
+# machine learning in multiple languages
+@TODO ML in c
+@TODO ML in rust
