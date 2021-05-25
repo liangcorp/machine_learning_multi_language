@@ -8,14 +8,15 @@ pub fn cost_function(X: &[f32], y: &[f32], theta: &f32, m: &i32]) {
 
         J (theta[0], theta[1]) = 1/2m (sum( (h(x[i]) - y[i]) ^ 2) )
 
-     */
+    */
 
-    i: i32 = 0;
-    J_theta: f32 = 0.0;     /* The cost */
+    let mut i: i32 = 0;
+    let mut J_theta: f32 = 0.0;     /* The cost */
 
     for (i = 0; i < m; i++)
     {
-        J_theta += ((theta * X[i]) - y[i]) * ((theta * X[i]) - y[i]) / (2 * m);
+        J_theta += ((theta * X[i]) - y[i]) * ((theta * X[i]) - y[i])
+                                                            / (2 * m);
     }
 
     J_theta
@@ -31,5 +32,13 @@ pub fn cost_function_multiple(X: &[f32], y: &[f32], theta: &[f32], m: &i32]) {
 
         J = sum(((theta' * X')' - y).^2 ./(2 * m), "all");
 
-     */
+    */
+
+    let mut i: i32 = 0;
+
+    let mut J_theta: f32 = 0.0;     /* The cost */
+
+    // @TODO
+
+    J_theta
 }
