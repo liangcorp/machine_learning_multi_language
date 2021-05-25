@@ -20,7 +20,7 @@
 double cost_function(double* X, double* y, float theta, int m)
 {
     /*
-        Creating the algrithem for the cost function.
+        Creating the algorithm for the cost function.
         X and y are the training sets.
         theta is a chosen number.
         m is the number of training sets.
@@ -59,7 +59,7 @@ double cost_function(double* X, double* y, float theta, int m)
 double cost_function_multiple(double* X, double* y, double *theta, int m)
 {
     /*
-        Creating the algrithem for the cost function.
+        Creating the algorithm for the cost function.
         X and y are the training sets.
         theta is a chosen number.
         m is the number of training sets.
