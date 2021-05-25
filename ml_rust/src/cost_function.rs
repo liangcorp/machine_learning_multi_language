@@ -13,8 +13,7 @@ pub fn cost_function(X: &[f32], y: &[f32], theta: &f32, m: &i32]) {
     let mut i: i32 = 0;
     let mut J_theta: f32 = 0.0;     /* The cost */
 
-    for (i = 0; i < m; i++)
-    {
+    for i in 0..m {
         J_theta += ((theta * X[i]) - y[i]) * ((theta * X[i]) - y[i])
                                                             / (2 * m);
     }
