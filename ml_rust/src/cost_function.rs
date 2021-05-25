@@ -22,7 +22,7 @@ pub fn cost_function(X: &[f32], y: &[f32], theta: &f32, m: &i32]) {
     J_theta
 }
 
-pub fn cost_function_multiple(X: &[f32], y: &[f32], theta: &[f32], m: &i32]) {
+pub fn cost_function_multiple(X: &Vec<f32>, y: &[f32], theta: &Vec<f32>, m: &i32]) {
     /*
         Creating the algorithm for the cost function.
         X and y are the training sets.
