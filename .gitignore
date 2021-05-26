@@ -71,4 +71,4 @@ Cargo.lock
 *.sublime-project
 .idea
 .DS_Store
-target
+/ml_rust/target/
