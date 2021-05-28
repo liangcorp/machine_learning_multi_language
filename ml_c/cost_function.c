@@ -34,7 +34,7 @@ double cost_function(double* X, double* y, float theta, int m)
     double J_theta = 0.0;   /* The cost */
 
     #ifdef DEBUG
-        clock_t cpu_start = clock();        /* Initial processor time */
+        clock_t cpu_start = clock();    /* Initial processor time */
     #endif
 
     for (i = 0; i < m; i++)
@@ -64,7 +64,8 @@ double cost_function(double* X, double* y, float theta, int m)
     return J_theta;
 }
 
-double cost_function_multiple(double* X, double* y, double *theta, int m)
+double cost_function_multiple(double* X, double* y, double *theta,
+                                                                int m)
 {
     /*
         Creating the algorithm for the cost function.
