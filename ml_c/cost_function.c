@@ -39,6 +39,14 @@ double cost_function(double* X, double* y, float theta, int m)
 
     for (i = 0; i < m; i++)
     {
+        /*
+            It turned out by using a cleaner code formate, the program
+            executes longer. So copying variable is expensive.
+
+            n = theta * X[i]) - y[i];
+            J_theta += (n * n) / (2 * m);
+
+        */
         J_theta += ((theta * X[i]) - y[i]) * ((theta * X[i]) - y[i])
                                                             / (2 * m);
     }
