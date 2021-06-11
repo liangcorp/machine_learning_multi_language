@@ -64,8 +64,8 @@ double cost_function(double* X, double* y, double theta, int m)
     return J_theta;
 }
 
-double cost_function_multiple(double* X, double* y, double* theta,
-                                                                int m)
+double* cost_function_multiple(double* X, double* y, double* theta,
+                                                int m, int th_count)
 {
     /*
         Creating the algorithm for the cost function.
@@ -78,21 +78,23 @@ double cost_function_multiple(double* X, double* y, double* theta,
 
      */
     int i = 0;
+    int j = 0;
 
-    double J_theta = 0.0;   /* The cost */
-    double *sum_theta_X = NULL;
+    double *J_theta = NULL;   /* The cost */
 
     #ifdef DEBUG
         clock_t cpu_start = clock();    /* Initial processor time */
     #endif
 
-    sum_theta_X = calloc(m, sizeof(double));
+    J_theta = calloc(th_count, sizeof(double));
 
-    for (i = 0; i < m; i++)
+    for (i = 0; i < th_count; i++)
     {
-        sum_theta_X[i] += theta[i] * X[i];
-        J_theta += (sum_theta_X[i] - y[i]) * (sum_theta_X[i] - y[i])
-                                                            / (2 * m);
+        for (j = 0; j < m; j++)
+        {
+             J_theta[i] += ((theta[i] * X[j]) - y[j])
+                            * ((theta[i] * X[j]) - y[j]) / (2 * m);
+        }
     }
 
     #ifdef DEBUG

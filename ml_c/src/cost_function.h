@@ -10,5 +10,5 @@
  */
 
 double cost_function(double* X, double* y, double theta, int m);
-double cost_function_multiple(double* X, double* y, double* theta,
-                                                                int m);
+double* cost_function_multiple(double* X, double* y, double* theta,
+                                        	int m, int th_count);

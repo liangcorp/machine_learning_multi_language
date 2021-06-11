@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
     FILE *fp = NULL;
 
     char str[200];
-    char *token = NULL;
 
     double *X = NULL;
     double *y = NULL;
@@ -47,7 +46,6 @@ int main(int argc, char *argv[])
 
     rewind(fp);
 
-    token = calloc(100, sizeof(char));
     X = calloc(m, sizeof(double));
     y = calloc(m, sizeof(double));
 
@@ -77,9 +75,19 @@ int main(int argc, char *argv[])
 
     printf("\nThe cost is %lf\n", cost_function(X, y, 1, m));
 
+    printf("\n\n The J theta of theta: 1, 1.1, 1.2, 1.3, 1.4 are:\n");
+
+    double thetas[] = {1, 1.1, 1.2, 1.3, 1.4};
+
+    double *J = cost_function_multiple(X, y, thetas, m, 5);
+
+    for (i = 0; i < 5; i++)
+    {
+        printf("%lf\n", J[i]);
+    }
+
     free(X);
     free(y);
-    free(token);
 
     #ifdef DEBUG
             printf("Freed all memory\n");
