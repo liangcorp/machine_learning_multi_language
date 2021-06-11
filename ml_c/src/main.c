@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 
     free(X);
     free(y);
-
+    free(J);
     #ifdef DEBUG
             printf("Freed all memory\n");
     #endif
