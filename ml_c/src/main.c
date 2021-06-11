@@ -16,7 +16,7 @@
 
 #include "cost_function.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
     FILE *fp = NULL;
 
@@ -30,7 +30,7 @@ int main(void)
     int i = 0;
 
     /* opening file for reading */
-    fp = fopen("data_files/ex1data1.txt", "r");
+    fp = fopen(argv[1], "r");
 
     if (fp == NULL)
     {
@@ -75,7 +75,7 @@ int main(void)
             printf("Closed file\n");
     #endif
 
-    printf("The cost is %lf\n", cost_function(X, y, 1, m));
+    printf("\nThe cost is %lf\n", cost_function(X, y, 1, m));
 
     free(X);
     free(y);
