@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     fp = NULL;
 
     #ifdef DEBUG
-            printf("Closed file\n");
+        printf("Closed file\n");
     #endif
 
     printf("\nThe cost is %lf\n", cost_function(X, y, 1, m));
@@ -79,7 +79,13 @@ int main(int argc, char *argv[])
 
     double thetas[] = {1, 1.1, 1.2, 1.3, 1.4};
 
-    double *J = cost_function_multiple(X, y, thetas, m, 5);
+    double *J = cost_function_multiple(X, y, thetas, m,
+                            (int)sizeof(thetas) / sizeof(thetas[0]));
+
+    #ifdef DEBUG
+        printf("Number of thetas: %d\n",
+                        (int)sizeof(thetas) / sizeof(thetas[0]));
+    #endif
 
     for (i = 0; i < 5; i++)
     {
@@ -90,7 +96,7 @@ int main(int argc, char *argv[])
     free(y);
     free(J);
     #ifdef DEBUG
-            printf("Freed all memory\n");
+        printf("Freed all memory\n");
     #endif
 
     return 0;

@@ -9,12 +9,6 @@
  *
  */
 
-#include <stdio.h>
-#include <math.h>
-#include <time.h>
-#include <ctype.h>
-#include <malloc.h>
-
 #include "cost_function.h"
 
 double cost_function(double* X, double* y, double theta, int m)
@@ -98,8 +92,6 @@ double* cost_function_multiple(double* X, double* y, double* theta,
     }
 
     #ifdef DEBUG
-        printf("The final cost is %lf\n", J_theta);
-
 
         clock_t cpu_end = clock();          /* Final cpu time */
 
