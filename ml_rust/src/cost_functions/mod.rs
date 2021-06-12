@@ -17,6 +17,7 @@
 ///
 /// The function returns a 32bit float
 ///
+
 pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: &Vec<f32>) -> f32{
     let mut j_theta: f32 = 0.0;     /* The cost */
     let m;
