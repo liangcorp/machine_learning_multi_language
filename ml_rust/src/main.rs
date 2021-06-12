@@ -45,14 +45,15 @@ fn main() {
         }
     }
 
-    println!("J theta is {}",
-            cost_functions::cost_function(&x, &y, 1.0));
+    let alpha = 0.01;
+    let no_iter = 1500;
 
-    let theta: Vec<f32> = vec![1.0, 1.1, 1.2, 1.3, 1.4];
+    println!("theta is 0, J is {}",
+            cost_functions::cost_function(&x, &y, &vec![0.0, 0.0]));
 
-    println!("List of J theta is {:?}",
-            cost_functions::cost_function_multiple(&x, &y, &theta));
+    println!("theta is -1, J is {}",
+            cost_functions::cost_function(&x, &y, &vec![-1.0, 2.0]));
 
     println!("Gradient Descent with single theta: {:?}",
-            gradient_descent::gradient_descent_single(&x, &y, 0.1, 20.5));
+            gradient_descent::gradient_descent_single(&x, &y, alpha, &mut theta));
 }

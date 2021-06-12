@@ -17,7 +17,7 @@
 ///
 /// The function returns a 32bit float
 ///
-pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: f32) -> f32{
+pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: &Vec<f32>) -> f32{
     let mut j_theta: f32 = 0.0;     /* The cost */
     let m;
 
@@ -30,8 +30,9 @@ pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: f32) -> f32{
     }
 
     for i in 0..m {
-        j_theta += ((theta * x[i]) - y[i]) * ((theta * x[i]) - y[i])
-                                                    / (2 * m) as f32;
+        j_theta += ((theta[0] + theta[1] * x[i]) - y[i])
+                        * ((theta[0] + theta[1] * x[i]) - y[i])
+                        / (2 * m) as f32;
     }
 
     j_theta
