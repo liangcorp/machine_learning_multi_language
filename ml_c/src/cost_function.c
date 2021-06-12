@@ -11,7 +11,7 @@
 
 #include "cost_function.h"
 
-double cost_function(double* X, double* y, double theta, int m)
+double cost_function(double* X, double* y, double* theta, int m)
 {
     /*
         Creating the algorithm for the cost function.
@@ -41,8 +41,9 @@ double cost_function(double* X, double* y, double theta, int m)
             J_theta += (n * n) / (2 * m);
 
         */
-        J_theta += ((theta * X[i]) - y[i]) * ((theta * X[i]) - y[i])
-                                                            / (2 * m);
+        J_theta += ((theta[0] + theta[1] * X[i]) - y[i])
+                    * ((theta[0] + theta[1] * X[i]) - y[i])
+                    / (2 * m);
     }
 
     #ifdef DEBUG

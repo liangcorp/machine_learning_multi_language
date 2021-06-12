@@ -73,8 +73,15 @@ int main(int argc, char *argv[])
         printf("Closed file\n");
     #endif
 
-    printf("\nThe cost is %lf\n", cost_function(X, y, 1, m));
+    double *theta = calloc(2, sizeof(double));
 
+    printf("\nThe cost is %lf\n", cost_function(X, y, theta, m));
+
+    theta[0] = -1.0;
+    theta[1] = 2.0;
+
+    printf("\nThe cost is %lf\n", cost_function(X, y, theta, m));
+    /*
     printf("\n\n The J theta of theta: 1, 1.1, 1.2, 1.3, 1.4 are:\n");
 
     double thetas[] = {1, 1.1, 1.2, 1.3, 1.4};
@@ -91,10 +98,11 @@ int main(int argc, char *argv[])
     {
         printf("%lf\n", J[i]);
     }
+    */
 
     free(X);
     free(y);
-    free(J);
+    // free(J);
     #ifdef DEBUG
         printf("Freed all memory\n");
     #endif
