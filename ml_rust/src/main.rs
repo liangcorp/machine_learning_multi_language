@@ -46,4 +46,9 @@ fn main() {
 
     println!("J theta is {}",
             cost_functions::cost_function(&x, &y, 1.0));
+
+    let theta: Vec<f32> = vec![1.0, 1.1, 1.2, 1.3, 1.4];
+
+    println!("List of J theta is {:?}",
+            cost_functions::cost_function_multiple(&x, &y, &theta));
 }
