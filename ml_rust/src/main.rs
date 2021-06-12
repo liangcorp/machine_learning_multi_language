@@ -25,10 +25,11 @@ fn main() {
     let mut x: Vec<f32> = Vec::new();
     let mut y: Vec<f32> = Vec::new();
 
+    // Read the file line by line
+    // split each line by ',' into two vectors of f32
     for line in lines {
         match line {
             Ok(line) => {
-                // println!("{:?}", line.split_once(','));
                 match line.split_once(',') {
                     Some(data_tuple) => {
                         x.push(data_tuple.0.parse::<f32>()
@@ -45,8 +46,8 @@ fn main() {
         }
     }
 
-    let alpha = 0.01;
-    let mut theta = vec![0.0, 0.0];
+    let alpha = 0.01;   // the learning speed
+    let mut theta = vec![0.0, 0.0]; // set theta 0 and theta 1 to 0.0
 
     println!("Thetas are [0.0, 0.0], J(theta) is {}",
             cost_functions::cost_function(&x, &y, &theta));
