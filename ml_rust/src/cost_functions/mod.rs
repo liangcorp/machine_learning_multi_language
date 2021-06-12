@@ -53,6 +53,7 @@ pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: &Vec<f32>) -> f32{
 /// The function returns the pointer to a Vector.
 /// The vector contains a list of J
 ///
+#[allow(dead_code)]
 pub fn cost_function_multiple<'a>(x: &Vec<f32>, y: &Vec<f32>,
                             theta: &Vec<f32>) -> Box<Vec<f32>> {
     let m;
