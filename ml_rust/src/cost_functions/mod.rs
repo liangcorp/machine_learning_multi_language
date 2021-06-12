@@ -1,15 +1,23 @@
+//! Simplified Cost function with 1 theta or 1 theta vector
+//!
+//! This crate is a collection of functions to perform
+//! calculation of J (theta 0 and theta 1).
+
+/// # Cost function for a single theta variable
+///
+/// - X and y are the training sets.
+/// - theta is a chosen number.
+/// - m is the number of training sets.
+///
+/// ## Calculate the cost (J) using the following matlab formula:
+///
+/// ```
+/// J = sum(((theta * X[i]) - y).^2 ./(2 * m), "all");
+/// ```
+///
+/// The function returns a 32bit float
+///
 pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: f32) -> f32{
-    /*
-        Creating the algorithm for the cost function.
-        X and y are the training sets.
-        theta is a chosen number.
-        m is the number of training sets.
-        Calculate the cost (J) using the following formula
-
-        J (theta[0], theta[1]) = 1/2m (sum( (h(x[i]) - y[i]) ^ 2) )
-
-    */
-
     let mut j_theta: f32 = 0.0;     /* The cost */
     let m;
 
@@ -29,19 +37,23 @@ pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: f32) -> f32{
     j_theta
 }
 
+/// # Cost function for a single theta vector
+///
+/// - X and y are the training sets.
+/// - theta is a vector that contains chosen numbers.
+/// - m is the number of training sets.
+///
+/// ## Calculate the cost (J) using the following matlab formula:
+///
+/// ```
+/// J[i] = sum(((theta[i] * X[j]) - y).^2 ./(2 * m), "all");
+/// ```
+///
+/// The function returns the pointer to a Vector.
+/// The vector contains a list of J
+///
 pub fn cost_function_multiple<'a>(x: &Vec<f32>, y: &Vec<f32>,
                             theta: &Vec<f32>) -> Box<Vec<f32>> {
-    /*
-        Creating the algorithm for the cost function.
-        X and y are the training sets.
-        theta is a chosen number.
-        m is the number of training sets.
-        Calculate the cost (J) using the following formula from matlab
-
-        J = sum(((theta' * X')' - y).^2 ./(2 * m), "all");
-
-    */
-
     let m;
     let n = theta.len();
 
