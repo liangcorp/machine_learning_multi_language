@@ -30,7 +30,7 @@ pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: f32) -> f32{
 }
 
 pub fn cost_function_multiple<'a>(x: &Vec<f32>, y: &Vec<f32>,
-                            theta: &Vec<f32>) -> Vec<f32> {
+                            theta: &Vec<f32>) -> Box<Vec<f32>> {
     /*
         Creating the algorithm for the cost function.
         X and y are the training sets.
@@ -67,5 +67,5 @@ pub fn cost_function_multiple<'a>(x: &Vec<f32>, y: &Vec<f32>,
         j_theta.push(j_theta_single);
     }
 
-    j_theta
+    Box::new(j_theta)
 }
