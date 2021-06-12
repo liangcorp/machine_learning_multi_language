@@ -1,4 +1,4 @@
-pub fn cost_function(X: &[f32], y: &[f32], theta: &f32, m: &i32]) {
+pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: f32) -> f32{
     /*
         Creating the algorithm for the cost function.
         X and y are the training sets.
@@ -10,18 +10,27 @@ pub fn cost_function(X: &[f32], y: &[f32], theta: &f32, m: &i32]) {
 
     */
 
-    let mut i: i32 = 0;
-    let mut J_theta: f32 = 0.0;     /* The cost */
+    let mut j_theta: f32 = 0.0;     /* The cost */
+    let m;
 
-    for i in 0..m {
-        J_theta += ((theta * X[i]) - y[i]) * ((theta * X[i]) - y[i])
-                                                            / (2 * m);
+    if x.len() == y.len() {
+        m = x.len();
+    }
+    else {
+        panic!("ERROR: training sets have
+                different number of elements");
     }
 
-    J_theta
+    for i in 0..m {
+        j_theta += ((theta * x[i]) - y[i]) * ((theta * x[i]) - y[i])
+                                                    / (2 * m) as f32;
+    }
+
+    j_theta
 }
 
-pub fn cost_function_multiple(X: &Vec<f32>, y: &[f32], theta: &Vec<f32>, m: &i32]) {
+/* pub fn cost_function_multiple(X: &[f32], y: &[f32],
+                            theta: &[f32], m: i32) -> Vec<[f32]> {
     /*
         Creating the algorithm for the cost function.
         X and y are the training sets.
@@ -35,9 +44,9 @@ pub fn cost_function_multiple(X: &Vec<f32>, y: &[f32], theta: &Vec<f32>, m: &i32
 
     let mut i: i32 = 0;
 
-    let mut J_theta: f32 = 0.0;     /* The cost */
+    let mut J_theta: f32 = Vec::new();     /* The cost */
 
     // @TODO
 
-    J_theta
-}
+    &J_theta
+} */
