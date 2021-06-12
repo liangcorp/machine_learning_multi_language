@@ -46,14 +46,15 @@ fn main() {
     }
 
     let alpha = 0.01;
-    let no_iter = 1500;
+    let mut theta = vec![0.0, 0.0];
 
-    println!("theta is 0, J is {}",
-            cost_functions::cost_function(&x, &y, &vec![0.0, 0.0]));
+    println!("Thetas are [0.0, 0.0], J(theta) is {}",
+            cost_functions::cost_function(&x, &y, &theta));
 
-    println!("theta is -1, J is {}",
+    println!("Thetas are [-1.0, 2.0], J(theta) is {}",
             cost_functions::cost_function(&x, &y, &vec![-1.0, 2.0]));
 
-    println!("Gradient Descent with single theta: {:?}",
-            gradient_descent::gradient_descent_single(&x, &y, alpha, &mut theta));
+    println!("Found thetas using Gradient Descent: {:?}",
+            gradient_descent::gradient_descent_single(&x, &y,
+                                        alpha, &mut theta));
 }
