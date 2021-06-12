@@ -46,7 +46,7 @@ pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: f32) -> f32{
 /// ## Calculate the cost (J) using the following matlab formula:
 ///
 /// ```
-/// J[i] = sum(((theta[i] * X[j]) - y).^2 ./(2 * m), "all");
+/// J = sum(((theta[i] * X[j]) - y).^2 ./(2 * m), "all");
 /// ```
 ///
 /// The function returns the pointer to a Vector.

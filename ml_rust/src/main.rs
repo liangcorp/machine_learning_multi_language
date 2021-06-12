@@ -5,6 +5,7 @@ use std::env;
 use std::string::String;
 
 mod cost_functions;
+mod gradient_descent;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -51,4 +52,7 @@ fn main() {
 
     println!("List of J theta is {:?}",
             cost_functions::cost_function_multiple(&x, &y, &theta));
+
+    println!("Gradient Descent with single theta: {:?}",
+            gradient_descent::gradient_descent_single(&x, &y, 0.1, 20.5));
 }
