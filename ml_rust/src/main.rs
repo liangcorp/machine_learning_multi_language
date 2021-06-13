@@ -6,6 +6,7 @@ use std::string::String;
 
 mod cost_functions;
 mod gradient_descent;
+mod feature_scaling;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -58,4 +59,9 @@ fn main() {
     println!("Found thetas using Gradient Descent: {:?}",
             gradient_descent::gradient_descent(&x, &y,
                                         alpha, &mut theta));
+
+    println!("Feature scaled X: {:?}",
+                            feature_scaling::zero_mean(&x));
+    println!("Feature scaled X: {:?}",
+                            feature_scaling::mean_normalization(&x));
 }
