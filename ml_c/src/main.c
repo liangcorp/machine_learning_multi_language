@@ -15,6 +15,7 @@
 #include <malloc.h>
 
 #include "cost_function.h"
+#include "gradient_descent.h"
 
 int main(int argc, char *argv[])
 {
@@ -40,7 +41,7 @@ int main(int argc, char *argv[])
     while(!feof(fp))
     {
         fgets(str, 200, fp);
-        printf("%s", str);
+        // printf("%s", str);
         m++;
     }
 
@@ -75,34 +76,26 @@ int main(int argc, char *argv[])
 
     double *theta = calloc(2, sizeof(double));
 
-    printf("\nThe cost is %lf\n", cost_function(X, y, theta, m));
+    printf("Thetas are [0.0, 0.0], J(theta) is %lf\n",
+                                        cost_function(X, y, theta, m));
 
     theta[0] = -1.0;
     theta[1] = 2.0;
 
-    printf("\nThe cost is %lf\n", cost_function(X, y, theta, m));
-    /*
-    printf("\n\n The J theta of theta: 1, 1.1, 1.2, 1.3, 1.4 are:\n");
+    printf("Thetas are [-1.0, 2.0], J(theta) is %lf\n",
+                                        cost_function(X, y, theta, m));
 
-    double thetas[] = {1, 1.1, 1.2, 1.3, 1.4};
+    theta[0] = 0.0;
+    theta[1] = 0.0;
+    float alpha = 0.01;
 
-    double *J = cost_function_multiple(X, y, thetas, m,
-                            (int)sizeof(thetas) / sizeof(thetas[0]));
-
-    #ifdef DEBUG
-        printf("Number of thetas: %d\n",
-                        (int)sizeof(thetas) / sizeof(thetas[0]));
-    #endif
-
-    for (i = 0; i < 5; i++)
-    {
-        printf("%lf\n", J[i]);
-    }
-    */
+    double *final_theta = gradient_desent(X, y, theta, alpha, m);
+    printf("Found thetas using Gradient Descent: [%lf, %lf]\n",
+                                    final_theta[0], final_theta[1]);
 
     free(X);
     free(y);
-    // free(J);
+    free(final_theta);
     #ifdef DEBUG
         printf("Freed all memory\n");
     #endif
