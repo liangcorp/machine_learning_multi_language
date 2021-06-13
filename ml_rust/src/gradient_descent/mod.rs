@@ -17,7 +17,7 @@
 ///
 use super::cost_functions;
 
-pub fn gradient_descent_single( x: &Vec<f32>,
+pub fn gradient_descent( x: &Vec<f32>,
                                 y: &Vec<f32>,
                                 alpha: f32,
                                 theta: &mut Vec<f32>)
@@ -38,7 +38,7 @@ pub fn gradient_descent_single( x: &Vec<f32>,
         sum = 0.0;
 
         for i in 0..m {
-            sum += (tmp_theta[1] * x[i]) - y[i];
+            sum += (tmp_theta[0] * x[i]) - y[i];
         }
 
         theta[0] = theta[0] - alpha * sum / m as f32;
@@ -58,6 +58,7 @@ pub fn gradient_descent_single( x: &Vec<f32>,
         } else {
             break;  // Break loop if found minium J theta
         }
+
     }
 
     Box::new(theta.to_vec())

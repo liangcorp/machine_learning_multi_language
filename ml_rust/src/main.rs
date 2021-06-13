@@ -56,6 +56,6 @@ fn main() {
             cost_functions::cost_function(&x, &y, &vec![-1.0, 2.0]));
 
     println!("Found thetas using Gradient Descent: {:?}",
-            gradient_descent::gradient_descent_single(&x, &y,
+            gradient_descent::gradient_descent(&x, &y,
                                         alpha, &mut theta));
 }
