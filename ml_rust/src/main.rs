@@ -57,7 +57,7 @@ fn main() {
             cost_functions::cost_fn_single(&x, &y, &vec![-1.0, 2.0]));
 
     println!("Found thetas using Gradient Descent: {:?}",
-            gradient_descent::gradient_descent(&x, &y,
+            gradient_descent::grade_des_single(&x, &y,
                                         alpha, &mut theta, 1500));
 
     println!("Feature scaled X: {:?}",
@@ -88,11 +88,17 @@ fn main() {
                                         212000.0,
                                         242500.0];
 
-    let ex2_theta: Vec<f32> = vec![0.0, 0.0, 0.0];
+    let mut ex2_theta: Vec<f32> = vec![0.0, 0.0, 0.0];
 
 
     println!("Multi-featured cost function: {:?}",
     cost_functions::cost_fn_multiple(&ex2_sample_x,
                                     &ex2_sample_y,
                                     &ex2_theta));
+
+    println!("Final theta for multi-featured X is {:?}",
+        gradient_descent::grade_des_multi(&ex2_sample_x,
+            &feature_scaling::mean_normalization(&ex2_sample_y),
+            alpha,
+            &mut ex2_theta, 400));
 }
