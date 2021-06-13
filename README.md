@@ -1,3 +1,3 @@
 # machine learning in multiple languages
-@TODO ML in c
-@TODO ML in rust
+
+Implement machine learning formulas in C and rust.
