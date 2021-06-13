@@ -51,10 +51,10 @@ fn main() {
     let mut theta = vec![0.0, 0.0]; // set theta 0 and theta 1 to 0.0
 
     println!("Thetas are [0.0, 0.0], J(theta) is {}",
-            cost_functions::cost_function(&x, &y, &theta));
+            cost_functions::cost_fn_single(&x, &y, &theta));
 
     println!("Thetas are [-1.0, 2.0], J(theta) is {}",
-            cost_functions::cost_function(&x, &y, &vec![-1.0, 2.0]));
+            cost_functions::cost_fn_single(&x, &y, &vec![-1.0, 2.0]));
 
     println!("Found thetas using Gradient Descent: {:?}",
             gradient_descent::gradient_descent(&x, &y,
