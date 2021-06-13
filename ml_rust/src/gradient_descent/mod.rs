@@ -1,27 +1,27 @@
-//! Implementation of Gradient Descent Algorithms
+//! Simplified gradient descent with one feature
 //!
 //! This crate is a collection of functions to perform
 //! calculation of gradient descent
 
-/// # Gradient descent for a single theta vector
+use super::cost_functions;
+
+/// # Gradient descent for a single feature (x\[1\])
 ///
+/// - X and y are the training sets.
+/// - alpha is the learning rate
+/// - theta is a chosen number.
 ///
-/// ## Calculate the cost (J) using the following matlab formula:
+/// ## Implement the following matlab formula:
 ///
 /// ```
 /// theta(indx,:) = theta(indx,:) -
-///                 alpha * ((((temp' * X') - y') * X(:,indx))/m);
+///                 alpha * ((((temp[] * X[]) - y[]) * X(:,indx))/m);
 /// ```
 ///
-/// The function returns a 32bit float
-///
-use super::cost_functions;
-
 pub fn gradient_descent( x: &Vec<f32>,
-                                y: &Vec<f32>,
-                                alpha: f32,
-                                theta: &mut Vec<f32>)
-                                -> Box<Vec<f32>> {
+                         y: &Vec<f32>,
+                         alpha: f32,
+                         theta: &mut Vec<f32>) -> Box<Vec<f32>> {
     let m = y.len();
 
     let mut sum: f32;

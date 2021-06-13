@@ -1,24 +1,22 @@
-//! Simplified Cost function with 1 theta or 1 theta vector
+//! Simplified cost function with one feature
 //!
 //! This crate is a collection of functions to perform
-//! calculation of J (theta 0 and theta 1).
+//! calculation of J(theta)
 
-/// # Cost function for a single theta variable
+/// # Cost function for a single feature (x\[1\])
 ///
 /// - X and y are the training sets.
 /// - theta is a chosen number.
-/// - m is the number of training sets.
 ///
-/// ## Calculate the cost (J) using the following matlab formula:
+/// ## Implement the following matlab formula:
 ///
 /// ```
 /// J = sum(((theta * X[i]) - y).^2 ./(2 * m), "all");
 /// ```
 ///
-/// The function returns a 32bit float
-///
-
-pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: &Vec<f32>) -> f32{
+pub fn cost_function(x: &Vec<f32>,
+                        y: &Vec<f32>,
+                        theta: &Vec<f32>) -> f32{
     let mut j_theta: f32 = 0.0;     /* The cost */
     let m;
 
@@ -39,24 +37,22 @@ pub fn cost_function(x: &Vec<f32>, y: &Vec<f32>, theta: &Vec<f32>) -> f32{
     j_theta
 }
 
-/// # Cost function for a single theta vector
+/// # Cost function for multiple features (x\[1\], x\[2\], ..., x\[n\]
 ///
 /// - X and y are the training sets.
 /// - theta is a vector that contains chosen numbers.
-/// - m is the number of training sets.
 ///
-/// ## Calculate the cost (J) using the following matlab formula:
+/// ## Implement the following matlab formula:
 ///
 /// ```
 /// J = sum(((theta[i] * X[j]) - y).^2 ./(2 * m), "all");
 /// ```
 ///
-/// The function returns the pointer to a Vector.
-/// The vector contains a list of J
-///
 #[allow(dead_code)]
-pub fn cost_function_multiple<'a>(x: &Vec<f32>, y: &Vec<f32>,
-                            theta: &Vec<f32>) -> Box<Vec<f32>> {
+pub fn cost_function_multiple<'a>(x: &Vec<f32>,
+                                    y: &Vec<f32>,
+                                    theta: &Vec<f32>)
+                                    -> Box<Vec<f32>> {
     let m;
     let n = theta.len();
 
