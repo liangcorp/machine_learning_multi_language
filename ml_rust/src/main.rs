@@ -58,7 +58,7 @@ fn main() {
 
     println!("Found thetas using Gradient Descent: {:?}",
             gradient_descent::gradient_descent(&x, &y,
-                                        alpha, &mut theta));
+                                        alpha, &mut theta, 1500));
 
     println!("Feature scaled X: {:?}",
                             feature_scaling::zero_mean(&x));
