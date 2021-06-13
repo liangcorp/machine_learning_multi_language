@@ -64,4 +64,35 @@ fn main() {
                             feature_scaling::zero_mean(&x));
     println!("Feature scaled X: {:?}",
                             feature_scaling::mean_normalization(&x));
+
+
+    // I just needed some samples. Don't judge me
+    let ex2_sample_x: Vec<Vec<f32>> = vec![vec![1.0, 2104.0, 3.0],
+                                        vec![1.0, 1600.0, 3.0],
+                                        vec![1.0, 2400.0, 3.0],
+                                        vec![1.0, 1416.0, 2.0],
+                                        vec![1.0, 3000.0, 4.0],
+                                        vec![1.0, 1985.0, 4.0],
+                                        vec![1.0, 1534.0, 3.0],
+                                        vec![1.0, 1427.0, 3.0],
+                                        vec![1.0, 1380.0, 3.0],
+                                        vec![1.0, 1494.0, 3.0]];
+    let ex2_sample_y: Vec<f32> = vec![399900.0,
+                                        329900.0,
+                                        369000.0,
+                                        232000.0,
+                                        539900.0,
+                                        299900.0,
+                                        314900.0,
+                                        198999.0,
+                                        212000.0,
+                                        242500.0];
+
+    let ex2_theta: Vec<f32> = vec![0.0, 0.0, 0.0];
+
+
+    println!("Multi-featured cost function: {:?}",
+    cost_functions::cost_fn_multiple(&ex2_sample_x,
+                                    &ex2_sample_y,
+                                    &ex2_theta));
 }
