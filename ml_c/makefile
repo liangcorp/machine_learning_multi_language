@@ -8,8 +8,6 @@ all:
 	${CC} -I ./libs/ -c ./src/main.c -o ./libs/main.o
 	${CC} -o ./bin/main ./libs/main.o -L ./libs/ -l costfn -l grades
 
-	export LD_LIBRARY_PATH=./libs:$LD_LIBRARY_PATH
-
 	chmod +x ./bin/main
 
 debug:
@@ -18,8 +16,6 @@ debug:
 	${CC} -D DEBUG -g -fPIC ./src/gradient_descent.c -shared -o ./libs/libgrades.so
 	${CC} -D DEBUG -I ./libs/ -c ./src/main.c -o ./libs/main.o
 	${CC} -o ./bin/main ./libs/main.o -L ./libs/ -l grades -l costfn
-
-	export LD_LIBRARY_PATH=./libs:$LD_LIBRARY_PATH
 
 	chmod +x ./bin/main
 

@@ -15,4 +15,5 @@ double* gradient_desent(double *x,
 			double *y,
 			double *theta,
 			float alpha,
-			int m);
+			int m,
+			int num_iters);
