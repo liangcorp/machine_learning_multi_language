@@ -26,16 +26,16 @@ typedef struct
 
 typedef struct
 {
-    double ** V;
-    float mean;
-    float std_dev;
+    double **V;
+    double *mean;
+    double *std_dev;
 } normal_multi_t;
 
 typedef struct
 {
     double * v;
-    float mean;
-    float std_dev;
+    double mean;
+    double std_dev;
 } normal_single_t;
 
 data_t* get_data(char *file_name);
