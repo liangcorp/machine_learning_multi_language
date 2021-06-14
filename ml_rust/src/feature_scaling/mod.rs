@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 pub fn zero_mean(v: &Vec<f32>) -> Box<Vec<f32>> {
     let mut max: f32;
     let mut min: f32;
