@@ -12,7 +12,7 @@
 #include "cost_function.h"
 
 double cost_function(double** X, double* y, double* theta,
-                                int no_train, int no_feat)
+                                int num_train, int num_feat)
 {
     /*
         Creating the algorithm for the cost function.
@@ -39,22 +39,22 @@ double cost_function(double** X, double* y, double* theta,
         clock_t cpu_start = clock();    /* Initial processor time */
     #endif
 
-    h_x = calloc(no_train, sizeof(double));
+    h_x = calloc(num_train, sizeof(double));
 
-    for (i = 0; i < no_train; i++)
+    for (i = 0; i < num_train; i++)
     {
         sum = 0.0L;
-        for (j = 0; j < no_feat; j++)
+        for (j = 0; j < num_feat; j++)
         {
             sum += X[i][j] * theta[j];
         }
         h_x[i] = sum;
     }
 
-    for (i = 0; i < no_train; i++)
+    for (i = 0; i < num_train; i++)
     {
         J_theta += (h_x[i] - y[i]) * (h_x[i] - y[i])
-                    / (2 * (double)no_train);
+                    / (2 * (double)num_train);
     }
 
     #ifdef DEBUG
