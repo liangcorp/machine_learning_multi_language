@@ -1,5 +1,5 @@
 /**
- * @file linear_regression.h
+ * @file machine_learning.h
  * @author Chen Liang
  * @brief Implementation of gradient descent in C
  * @version 0.1
