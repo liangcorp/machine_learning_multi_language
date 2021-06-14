@@ -1,7 +1,7 @@
 /**
  * @file machine_learning.h
  * @author Chen Liang
- * @brief Implementation of gradient descent in C
+ * @brief Header file for machine learning in C
  * @version 0.1
  * @date 2021-06-14
  *

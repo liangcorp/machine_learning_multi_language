@@ -1,3 +1,14 @@
+/**
+ * @file read_data.c
+ * @author Chen Liang
+ * @brief Read data from file and store it in array
+ * @version 0.1
+ * @date 2021-06-15
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
 #include "machine_learning.h"
 
 data_t* get_data(char *file_name)
