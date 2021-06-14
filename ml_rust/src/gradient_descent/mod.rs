@@ -55,9 +55,7 @@ pub fn get_thetas( x: &Vec<Vec<f32>>, y: &Vec<f32>,
             }
 
             theta[j] = tmp_theta[j] - (alpha * sum / (m as f32));
-            print!("{} ", theta[j]);
         }
-        println!("");
     }
 
     Box::new(theta.to_vec())
