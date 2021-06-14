@@ -122,16 +122,23 @@ int main(int argc, char *argv[])
 
     printf("Thetas are [-1.0, 2.0], J(theta) is %lf\n",
                             cost_function(X, y, theta, m, n));
-/*
-    theta[0] = 0.0;
-    theta[1] = 0.0;
+
     float alpha = 0.01;
 
-    double *final_theta = gradient_desent(X, y, theta, alpha, m, 1500);
-    printf("Found thetas using Gradient Descent: [%lf, %lf]\n",
-                                    final_theta[0], final_theta[1]);
+    theta[0] = 0.0;
+    theta[1] = 0.0;
 
-*/
+    double *final_theta =
+            gradient_desent_multi(X, y, theta, alpha, m, n, 1500);
+
+    printf("Found thetas using Gradient Descent: [");
+
+    for (i = 0; i < n; i++)
+    {
+        printf("%lf ", final_theta[i]);
+    }
+    printf("]\n");
+
 
     for (i = 0; i < m; i++)
     {
@@ -141,6 +148,7 @@ int main(int argc, char *argv[])
 
     free(y);
     free(theta);
+    free(final_theta);
     #ifdef DEBUG
         printf("Freed all memory\n");
     #endif

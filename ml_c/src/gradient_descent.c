@@ -8,43 +8,64 @@
  * @copyright Copyright (c) 2021
  *
  */
-
 #include "gradient_descent.h"
 
-double* gradient_desent(double *x,
-                        double *y,
-                        double *theta,
-                        float alpha,
-                        int m,
-                        int num_iters)
+double* gradient_desent_multi(double **X, double *y, double *theta,
+			                    float alpha, int num_train,
+                                int num_feat, int num_iters)
 {
-    double sum = 0.0L;
-    double *tmp_theta = calloc(2, sizeof(double));
-
     int i = 0;
     int j = 0;
 
-    for (i = 0; i < num_iters; i++)
+    double sum = 0.0L;
+    double *tmp_theta = calloc(num_feat, sizeof(double));
+    double *h_x = calloc(num_train, sizeof(double));
+    double *final_theta = calloc(num_feat, sizeof(double));
+
+    for (j = 0; j < num_feat; j++)
     {
-        tmp_theta[0] = theta[0];
-        tmp_theta[1] = theta[1];
-
-        sum = 0.0L;
-
-        for (j = 0; j < m; j++)
-        {
-            sum += (tmp_theta[0] * x[j]) - y[j];
-        }
-        theta[0] = theta[0] - alpha * sum / m;
-
-        sum = 0.0L;
-
-        for (j = 0; j < m; j++)
-        {
-            sum += ((tmp_theta[1] * x[j]) - y[j]) * x[j];
-        }
-        theta[1] = theta[1] - alpha * sum / m;
+        tmp_theta[j] = theta[j];
     }
 
-    return theta;
+    while (num_iters > 0)
+    {
+        memset(h_x, 0.0L, num_train * sizeof(double));
+
+        for (j = 0; j < num_feat; j++)
+        {
+            tmp_theta[j] = theta[j];
+        }
+
+        for (i = 0; i < num_train; i++)
+        {
+            for (j = 0; j < num_feat; j++)
+            {
+                h_x[i] += tmp_theta[j] * X[i][j];
+            }
+        }
+
+        for (j = 0; j < num_feat; j++)
+        {
+            sum = 0.0L;
+
+            for (i = 0; i < num_train; i++)
+            {
+                sum += (h_x[i] - y[i]) * X[i][j];
+            }
+
+            theta[j] = tmp_theta[j] - (alpha * sum / (double) num_train);
+        }
+
+        num_iters--;
+    }
+
+    for (i = 0; i < num_feat; i++)
+    {
+        final_theta[i] = theta[i];
+    }
+
+    free(h_x);
+    free(tmp_theta);
+
+    return final_theta;
 }
