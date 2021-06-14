@@ -1,4 +1,4 @@
-#include "linear_regression.h"
+#include "machine_learning.h"
 
 data_t* get_data(char *file_name)
 {

@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2021
  *
  */
-#include "linear_regression.h"
+#include "machine_learning.h"
 
 double* gradient_desent(double **X, double *y, double *theta,
 			                    float alpha, int num_train,

@@ -14,7 +14,7 @@
 #include <string.h>
 #include <malloc.h>
 
-#include "linear_regression.h"
+#include "machine_learning.h"
 
 int main(int argc, char *argv[])
 {
