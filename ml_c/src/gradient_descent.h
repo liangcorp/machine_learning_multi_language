@@ -12,5 +12,5 @@
 #include <stdlib.h>
 #include <string.h>
 
-double* gradient_desent_multi(double **X, double *y, double *theta,
+double* gradient_desent(double **X, double *y, double *theta,
 	float alpha, int num_train, int num_feat, int num_iters);

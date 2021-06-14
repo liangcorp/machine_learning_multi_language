@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
     theta[1] = 0.0;
 
     double *final_theta =
-            gradient_desent_multi(X, y, theta, alpha, m, n, 1500);
+                    gradient_desent(X, y, theta, alpha, m, n, 1500);
 
     printf("Found thetas using Gradient Descent: [");
 
