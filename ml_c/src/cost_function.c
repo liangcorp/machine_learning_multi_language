@@ -11,56 +11,8 @@
 
 #include "cost_function.h"
 
-double cost_function(double* X, double* y, double* theta, int m)
-{
-    /*
-        Creating the algorithm for the cost function.
-        X and y are the training sets.
-        theta is a chosen number.
-        m is the number of training sets.
-        Calculate the cost (J) using the following formula
-
-        J (theta[0], theta[1]) = 1/2m (sum( (h(x[i]) - y[i]) ^ 2) )
-
-     */
-    int i = 0;
-
-    double J_theta = 0.0;   /* The cost */
-
-    #ifdef DEBUG
-        clock_t cpu_start = clock();    /* Initial processor time */
-    #endif
-
-    for (i = 0; i < m; i++)
-    {
-        /*
-            It turned out by using a cleaner code formate, the program
-            executes longer. So copying variable is expensive.
-
-            n = theta * X[i]) - y[i];
-            J_theta += (n * n) / (2 * m);
-
-        */
-        J_theta += ((theta[0] + theta[1] * X[i]) - y[i])
-                    * ((theta[0] + theta[1] * X[i]) - y[i])
-                    / (2 * m);
-    }
-
-    #ifdef DEBUG
-        printf("The final cost is %lf\n", J_theta);
-
-
-        clock_t cpu_end = clock();          /* Final cpu time */
-
-        printf("CPU time is %lf seconds\n",
-                    ((double)(cpu_end - cpu_start)) / CLOCKS_PER_SEC);
-    #endif
-
-    return J_theta;
-}
-
-double* cost_function_multiple(double* X, double* y, double* theta,
-                                                int m, int th_count)
+double cost_function(double** X, double* y, double* theta,
+                                int no_train, int no_feat)
 {
     /*
         Creating the algorithm for the cost function.
@@ -71,25 +23,38 @@ double* cost_function_multiple(double* X, double* y, double* theta,
 
         J = sum(((theta' * X')' - y).^2 ./(2 * m), "all");
 
+        m is the length of training set.
+        n is the number of features.
+
      */
+
     int i = 0;
     int j = 0;
 
-    double *J_theta = NULL;   /* The cost */
+    double J_theta = 0.0L;   /* The cost */
+    double sum = 0.0L;
+    double *h_x = NULL;
 
     #ifdef DEBUG
         clock_t cpu_start = clock();    /* Initial processor time */
     #endif
 
-    J_theta = calloc(th_count, sizeof(double));
+    h_x = calloc(no_train, sizeof(double));
 
-    for (i = 0; i < th_count; i++)
+    for (i = 0; i < no_train; i++)
     {
-        for (j = 0; j < m; j++)
+        sum = 0.0L;
+        for (j = 0; j < no_feat; j++)
         {
-             J_theta[i] += ((theta[i] * X[j]) - y[j])
-                            * ((theta[i] * X[j]) - y[j]) / (2 * m);
+            sum += X[i][j] * theta[j];
         }
+        h_x[i] = sum;
+    }
+
+    for (i = 0; i < no_train; i++)
+    {
+        J_theta += (h_x[i] - y[i]) * (h_x[i] - y[i])
+                    / (2 * (double)no_train);
     }
 
     #ifdef DEBUG
@@ -99,6 +64,8 @@ double* cost_function_multiple(double* X, double* y, double* theta,
         printf("CPU time is %lf seconds\n",
                     ((double)(cpu_end - cpu_start)) / CLOCKS_PER_SEC);
     #endif
+
+    free(h_x);
 
     return J_theta;
 }
