@@ -21,8 +21,7 @@ int main(int argc, char *argv[])
 
     data_t *data_set = NULL;
 
-    int i = 0;
-    int j = 0;
+    int i, j;
 
     int num_train = 0;  // number of training set
     int num_feat = 0;   // number of features
@@ -66,6 +65,11 @@ int main(int argc, char *argv[])
     }
     printf("]\n");
 
+    /*
+    normal_single_t* result_y = mean_normal_single(y, num_train);
+    free(result_y->v);
+    free(result_y);
+    */
 
     for (i = 0; i < num_train; i++)
     {

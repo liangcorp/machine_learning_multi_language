@@ -3,7 +3,7 @@
  * @author Chen Liang
  * @brief Implementation of gradient descent in C
  * @version 0.1
- * @date 2021-05-05
+ * @date 2021-06-14
  *
  * @copyright Copyright (c) 2021
  *
@@ -14,8 +14,7 @@ double* gradient_desent(double **X, double *y, double *theta,
 			                    float alpha, int num_train,
                                 int num_feat, int num_iters)
 {
-    int i = 0;
-    int j = 0;
+    int i, j;
 
     double sum = 0.0L;
     double *tmp_theta = calloc(num_feat, sizeof(double));

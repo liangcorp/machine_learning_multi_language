@@ -28,8 +28,7 @@ double cost_function(double** X, double* y, double* theta,
 
      */
 
-    int i = 0;
-    int j = 0;
+    int i, j;
 
     double J_theta = 0.0L;   /* The cost */
     double sum = 0.0L;

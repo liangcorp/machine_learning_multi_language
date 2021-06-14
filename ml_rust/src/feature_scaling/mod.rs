@@ -1,4 +1,4 @@
-pub fn mean_normal_y(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
+pub fn mean_normal_single(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
     let mut max: f32;
     let mut min: f32;
     let mut result: Vec<f32> = Vec::new();
@@ -41,7 +41,7 @@ pub fn mean_normal_y(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
     (Box::new(result), mean, std_dev)
 }
 
-pub fn mean_normal_x(v: &Vec<Vec<f32>>)
+pub fn mean_normal_multiple(v: &Vec<Vec<f32>>)
             -> (Box<Vec<Vec<f32>>>, Box<Vec<f32>>, Box<Vec<f32>>) {
     let mut max: Vec<f32> = Vec::new();
     let mut min: Vec<f32> = Vec::new();
