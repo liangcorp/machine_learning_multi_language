@@ -34,10 +34,6 @@ pub fn mean_normal_single(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
         );
     }
 
-    for i in 0..v.len() {
-        println!("{}", result[i]);
-    }
-
     (Box::new(result), mean, std_dev)
 }
 
@@ -62,6 +58,7 @@ pub fn mean_normal_multiple(v: &Vec<Vec<f32>>)
     }
 
     mean.push(1.0);
+
     for j in 1..col {
         sum = 0.0;
         for i in 0..row {
@@ -97,13 +94,6 @@ pub fn mean_normal_multiple(v: &Vec<Vec<f32>>)
         for i in 0..row {
             result[i][j] = (v[i][j] - mean[j]) / std_dev[j];
         }
-    }
-
-    for i in 0..row {
-        for j in 0..col {
-            print!("{}, ", result[i][j]);
-        }
-        println!("");
     }
 
     (Box::new(result), Box::new(mean), Box::new(std_dev))
