@@ -1,3 +1,5 @@
+//! # Read data from file and store the value into vectors
+//!
 use std::fs::File;
 use std::path::Path;
 use std::io::{self, ErrorKind, BufRead};

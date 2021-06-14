@@ -1,12 +1,19 @@
+//! # Implementation of feature normalization
+///
+/// Use mean normalization on 1D array.
+/// This is used on Y that is a 1D array.
+///
 pub fn mean_normal_single(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
     let mut max: f32;
     let mut min: f32;
     let mut result: Vec<f32> = Vec::new();
     let mut sum: f32 = 0.0;
 
+    /* Set max and min for feature */
     max = v[0];
     min = v[0];
 
+    /* Find max and min for feature */
     for i in v.iter() {
         if max < *i {
             max = *i;
@@ -36,6 +43,20 @@ pub fn mean_normal_single(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
 
     (Box::new(result), mean, std_dev)
 }
+
+/// # Use mean normalization on 2D array.
+/// This is used on X that usually contains multiple features.
+/// The function returns a pointer to a structure.
+/// The structure contains pointers to the following:
+///     - Pointer to the result 2D array
+///     - Pointer to the list of mean
+///     - Pointer to the list of standard deviation
+///
+/// NOTE: Run free on pointers of the structure
+/// and its elements in main.
+///
+/// NOTE: The values of first feature (i.e. x\[0\] is 1.0)
+///
 
 pub fn mean_normal_multiple(v: &Vec<Vec<f32>>)
             -> (Box<Vec<Vec<f32>>>, Box<Vec<f32>>, Box<Vec<f32>>) {
