@@ -9,7 +9,7 @@
  *
  */
 
-#include "cost_function.h"
+#include "linear_regression.h"
 
 double cost_function(double** X, double* y, double* theta,
                                 int num_train, int num_feat)

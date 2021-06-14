@@ -14,9 +14,7 @@
 #include <string.h>
 #include <malloc.h>
 
-#include "read_data.h"
-#include "cost_function.h"
-#include "gradient_descent.h"
+#include "linear_regression.h"
 
 int main(int argc, char *argv[])
 {

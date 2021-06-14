@@ -1,4 +1,4 @@
-#include "read_data.h"
+#include "linear_regression.h"
 
 data_t* get_data(char *file_name)
 {
