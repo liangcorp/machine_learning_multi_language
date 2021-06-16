@@ -1,2 +1,2 @@
-#!/usr/bin/bash
-export LD_LIBRARY_PATH=./libs:$LD_LIBRARY_PATH
+#!/bin/bash
+source "export LD_LIBRARY_PATH=./libs:$LD_LIBRARY_PATH"

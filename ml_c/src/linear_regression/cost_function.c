@@ -9,7 +9,7 @@
  *
  */
 
-#include "machine_learning.h"
+#include "../machine_learning.h"
 
 double cost_function(double** X, double* y, double* theta,
                                 int num_train, int num_feat)
