@@ -1,13 +1,11 @@
 use std::path::Path;
 
-mod cost_functions;
-mod gradient_descent;
 mod feature_scaling;
 mod read_data;
-mod normal_equation;
+
+use ml_rust::linear_regression;
 
 fn main() {
-
     let path = Path::new("../data_files/ex1data1.txt");
 
     let (x_ptr, y_ptr) = read_data::get_data(&path);
@@ -20,16 +18,17 @@ fn main() {
     let mut theta = vec![0.0, 0.0]; // set theta 0 and theta 1 to 0.0
 
     println!("Thetas are [0.0, 0.0], J(theta) is {}",
-            cost_functions::get_cost(&x, &y, &theta));
+    linear_regression::cost_functions::get_cost(&x, &y, &theta));
 
     println!("Thetas are [-1.0, 2.0], J(theta) is {}",
-             cost_functions::get_cost(&x, &y, &vec![-1.0, 2.0]));
+    linear_regression::cost_functions::get_cost(&x, &y, &vec![-1.0, 2.0]));
 
     println!("Found thetas using Gradient Descent: {:?}",
-            gradient_descent::get_thetas(&x, &y,
+    linear_regression::gradient_descent::get_thetas(&x, &y,
                                         alpha, &mut theta, 1500));
 
-    normal_equation::get_theta(&x, &y);
+    println!("Found thetas using Normal Equation: {:?}",
+                linear_regression::normal_equation::get_theta(&x, &y));
 /*
     let path = Path::new("../data_files/ex1data2.txt");
     let (x_ptr, y_ptr) = read_data::get_data(&path);

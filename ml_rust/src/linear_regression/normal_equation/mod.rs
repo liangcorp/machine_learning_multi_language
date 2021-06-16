@@ -27,7 +27,6 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 		panic!("Miss matching training set numbers");
 	}
 
-
 	/*
 		Uncomment the following to test (X * X.transposed):
 		let x: Vec<Vec<f32>> = vec![vec![0.0, 1.0],
@@ -57,7 +56,7 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 			multiply_rslt_row.push(sum as f64);	// results for each row
 		}
 		multiply_rslt.push(multiply_rslt_row.clone());
-		println!("{:?}", multiply_rslt_row);
+		// println!("{:?}", multiply_rslt_row);
 	}
 
 	/*
@@ -143,7 +142,7 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 				// println!("");
 			}
 		}
-	println!("Determinant: {}", determinant);
+	// println!("Determinant: {}", determinant);
 
 
 	/*
@@ -172,7 +171,7 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 			sum += x[i][j] * y[i];
 		}
 		y_x_trans.push(sum as f64);
-		println!("{}", y_x_trans[j]);
+		// println!("{}", y_x_trans[j]);
 	}
 
 	/*
@@ -187,7 +186,7 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 		result.push(sum);
 	}
 
-	println!("{:?}", result);
+	// println!("{:?}", result);
 
 	Box::new(result)
 }
