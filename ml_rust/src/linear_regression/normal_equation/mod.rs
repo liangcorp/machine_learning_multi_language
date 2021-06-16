@@ -13,8 +13,8 @@
 pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 
 	let mut result: Vec<f32> = Vec::new();
-	let mut multiply_rslt: Vec<Vec<f64>> = Vec::new();
-	let mut multiply_rslt_row: Vec<f64> = Vec::new();
+	let mut mltply_rslt: Vec<Vec<f64>> = Vec::new();
+	let mut mltply_rslt_row: Vec<f64> = Vec::new();
 
 	let num_train;
 	let num_feat;
@@ -47,32 +47,22 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 							[CA + DB, CC + DD]]
 	*/
 	for i in 0..num_feat { // loop for columns
-		multiply_rslt_row.clear();
+		mltply_rslt_row.clear();
 		for j in 0..num_feat {	// loop for the rows of X
 			sum = 0.0;
 			for z in 0..num_train { // loop for the rows
 				sum += x[z][i] * x[z][j];
 			}
-			multiply_rslt_row.push(sum as f64);	// results for each row
+			mltply_rslt_row.push(sum as f64);	// results for each row
 		}
-		multiply_rslt.push(multiply_rslt_row.clone());
-		// println!("{:?}", multiply_rslt_row);
+		mltply_rslt.push(mltply_rslt_row.clone());
 	}
-
-	/*
-		println!("{}", multiply_rslt[0].len());
-		println!("{}", multiply_rslt.len());
-
-		for i in multiply_rslt.iter() {
-			println!("{:?}", i);
-		}
-	*/
 
 	let mut z: i32;
 	let mut determinant: f64 = 0.0;
 	let mut tmp_multiply: f64;
 
-	if multiply_rslt.len() == 2 {
+	if mltply_rslt.len() == 2 {
 		/*
 			Calculate the Determinant (der) of 2D matrix
 			M = [[A, B],
@@ -80,8 +70,8 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 			Determinant = A * D - B * C
 		*/
 
-		determinant = multiply_rslt[0][0] * multiply_rslt[1][1]
-					- multiply_rslt[0][1] * multiply_rslt[1][0];
+		determinant = mltply_rslt[0][0] * mltply_rslt[1][1]
+					- mltply_rslt[0][1] * mltply_rslt[1][0];
 	} else {
 		/*
 			Calculate the Determinant (der) of larger scale matrix
@@ -109,17 +99,13 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 					z = 0;	// Reset to column 0
 				}
 				// A * E * I + B * F * G + C * D * H
-				tmp_multiply *= multiply_rslt[j][z as usize];
-				// print!("{} ", multiply_rslt[j][z as usize]);
-				// println!("{}", tmp_multiply);
+				tmp_multiply *= mltply_rslt[j][z as usize];
+
 				z += 1;		// Move to next column
 			}
 			// first part of determinant
 			determinant += tmp_multiply;
-			// println!("first part determinant {}", determinant);
-			// println!("");
-			}
-			// println!("Determinant: {}", determinant);
+		}
 
 			for i in 0..num_feat {
 				z = (num_feat - 1 - i) as i32;
@@ -128,65 +114,71 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 				for j in 0..num_feat {
 
 					if z < 0 {
-						z = (num_feat - 1) as i32;	// Reset to column 0
+						z = (num_feat - 1) as i32; // Reset to column 0
 					}
 
 					// C * E * G - A * F * H - B * D * I
-					tmp_multiply *= multiply_rslt[num_feat - 1 - j][z as usize];
-					//println!("{}", tmp_multiply);
-					// print!("{} ", multiply_rslt[j][z as usize]);
+					tmp_multiply *=
+						mltply_rslt[num_feat - 1 - j][z as usize];
+
 					z -= 1;		// Move to last column
 				}
 				// last part of determinant
 				determinant -= tmp_multiply;
-				// println!("");
 			}
 		}
-	// println!("Determinant: {}", determinant);
-
 
 	/*
 		Calculate inverted X * X.transposed
 	*/
-	let mut invert_matrix = multiply_rslt.clone();
+	let mut invrt_mtrx = mltply_rslt.clone();
 
-	if multiply_rslt.len() == 2 {
+	if mltply_rslt.len() == 2 {
 		/*
 			Currently only support 2x2 matrix
 		*/
-		invert_matrix[0][0] = multiply_rslt[1][1] / determinant;
-		invert_matrix[1][1] = multiply_rslt[0][0] / determinant;
-		invert_matrix[0][1] = -multiply_rslt[0][1] / determinant;
-		invert_matrix[1][0] = -multiply_rslt[1][0] / determinant;
+		invrt_mtrx[0][0] = mltply_rslt[1][1] / determinant;
+		invrt_mtrx[1][1] = mltply_rslt[0][0] / determinant;
+		invrt_mtrx[0][1] = -mltply_rslt[0][1] / determinant;
+		invrt_mtrx[1][0] = -mltply_rslt[1][0] / determinant;
+	} else {
+		/*
+			Support inverting large scale matrix
+		*/
 	}
 
 	/*
 		Calculate y * X.transposed
 	*/
-
 	let mut y_x_trans: Vec<f64> = Vec::new();
+
 	for j in 0..num_feat {
 		sum = 0.0;
 		for i in 0..num_train {
 			sum += x[i][j] * y[i];
 		}
 		y_x_trans.push(sum as f64);
-		// println!("{}", y_x_trans[j]);
 	}
 
 	/*
-		Calculate final theta
+		Formula for calculating theta
+		theta = (X.trans * X)^-1 * X.trans * y
+
+		Because:
+			invrt_mtrx = (X.trans * X)^-1
+			y_x_trans = X.trans * y
+
+		Therefore:
+			theta = invrt_mtrx * y_x_trans
 	*/
 
 	for i in 0..num_feat {
 		sum = 0.0;
 		for j in 0..num_feat {
-			sum += (invert_matrix[i][j] * y_x_trans[j]) as f32;
+			sum += (invrt_mtrx[i][j] * y_x_trans[j]) as f32;
 		}
 		result.push(sum);
 	}
-
-	// println!("{:?}", result);
 
 	Box::new(result)
 }
