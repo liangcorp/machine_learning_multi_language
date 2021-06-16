@@ -3,6 +3,7 @@
 /// Use mean normalization on 1D array.
 /// This is used on Y that is a 1D array.
 ///
+#[allow(dead_code)]
 pub fn mean_normal_single(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
     let mut max: f32;
     let mut min: f32;
@@ -57,7 +58,7 @@ pub fn mean_normal_single(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
 ///
 /// NOTE: The values of first feature (i.e. x\[0\] is 1.0)
 ///
-
+#[allow(dead_code)]
 pub fn mean_normal_multiple(v: &Vec<Vec<f32>>)
             -> (Box<Vec<Vec<f32>>>, Box<Vec<f32>>, Box<Vec<f32>>) {
     let mut max: Vec<f32> = Vec::new();

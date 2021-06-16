@@ -4,6 +4,7 @@ mod cost_functions;
 mod gradient_descent;
 mod feature_scaling;
 mod read_data;
+mod normal_equation;
 
 fn main() {
 
@@ -28,6 +29,7 @@ fn main() {
             gradient_descent::get_thetas(&x, &y,
                                         alpha, &mut theta, 1500));
 
+    normal_equation::get_theta(&x, &y);
 /*
     let path = Path::new("../data_files/ex1data2.txt");
     let (x_ptr, y_ptr) = read_data::get_data(&path);
