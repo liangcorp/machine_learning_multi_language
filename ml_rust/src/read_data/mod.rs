@@ -4,7 +4,7 @@ use std::fs::File;
 use std::path::Path;
 use std::io::{self, ErrorKind, BufRead};
 
-pub fn get_data(path: &Path) -> (Box<Vec<Vec<f32>>>, Box<Vec<f32>>) {
+pub fn get_data(path: &Path) -> (Box<Vec<Vec<f64>>>, Box<Vec<f64>>) {
     let lines = match File::open(path) {
         Ok(file) => io::BufReader::new(file).lines(),
         Err(ref error) if error.kind() == ErrorKind::NotFound => {
@@ -16,7 +16,7 @@ pub fn get_data(path: &Path) -> (Box<Vec<Vec<f32>>>, Box<Vec<f32>>) {
     };
 
 
-    let mut y: Vec<f32> = Vec::new();
+    let mut y: Vec<f64> = Vec::new();
     let mut v: Vec<String> = Vec::new();
 
     // Read the file line by line
@@ -27,7 +27,7 @@ pub fn get_data(path: &Path) -> (Box<Vec<Vec<f32>>>, Box<Vec<f32>>) {
                 match line.rsplit_once(',') {
                     Some(data_tuple) => {
                         v.push(data_tuple.0.to_string());
-                        y.push(data_tuple.1.parse::<f32>()
+                        y.push(data_tuple.1.parse::<f64>()
                                             .expect("Failed"));
                     },
                     None => (),
@@ -45,20 +45,20 @@ pub fn get_data(path: &Path) -> (Box<Vec<Vec<f32>>>, Box<Vec<f32>>) {
         tmp.push(i.split(',').collect::<Vec<&str>>());
     }
 
-    let mut x: Vec<Vec<f32>> = Vec::new();
+    let mut x: Vec<Vec<f64>> = Vec::new();
 
     for i in tmp.iter() {
-        let mut tmp_f32: Vec<f32> = Vec::new();
-        tmp_f32.push(1.0);
+        let mut tmp_f64: Vec<f64> = Vec::new();
+        tmp_f64.push(1.0);
         for j in i.into_iter().map(|e| {
-                e.to_string().parse::<f32>()
+                e.to_string().parse::<f64>()
             }) {
             match j {
-                Ok(f) => tmp_f32.push(f),
+                Ok(f) => tmp_f64.push(f),
                 Err(_) => (),
             }
         }
-        x.push(tmp_f32);
+        x.push(tmp_f64);
     }
 
     (Box::new(x), Box::new(y))

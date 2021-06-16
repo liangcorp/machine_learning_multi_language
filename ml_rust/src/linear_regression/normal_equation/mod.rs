@@ -39,7 +39,7 @@ fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 		*/
 
 		/*
-			let x: Vec<Vec<f32>> = vec![vec![0.0, 0.1, 0.2],
+			let x: Vec<Vec<f64>> = vec![vec![0.0, 0.1, 0.2],
 										vec![1.0, 1.1, 1.2],
 										vec![2.0, 2.1, 2.2]];
 			let num_train = x.len();
@@ -85,16 +85,22 @@ fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 	determinant
 }
 
-pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
+fn get_invert(matrix: &Vec<Vec<f64>>) -> Box<Vec<Vec<f64>>> {
+	let mut result: Vec<Vec<f64>> = Vec::new();
 
-	let mut result: Vec<f32> = Vec::new();
+	Box::new(result)
+}
+
+pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Box<Vec<f64>> {
+
+	let mut result: Vec<f64> = Vec::new();
 	let mut mltply_rslt: Vec<Vec<f64>> = Vec::new();
 	let mut mltply_rslt_row: Vec<f64> = Vec::new();
 
 	let num_train;
 	let num_feat;
 
-	let mut sum: f32;
+	let mut sum: f64;
 
 	if x.len() == y.len() {
 		num_train = x.len();
@@ -104,7 +110,7 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 
 	/*
 		Uncomment the following to test (X * X.transposed):
-		let x: Vec<Vec<f32>> = vec![vec![0.0, 1.0],
+		let x: Vec<Vec<f64>> = vec![vec![0.0, 1.0],
 									vec![2.0, 3.0]];
 		num_train = x.len();
 
@@ -182,7 +188,7 @@ pub fn get_theta(x: &Vec<Vec<f32>>, y: &Vec<f32>) -> Box<Vec<f32>> {
 	for i in 0..num_feat {
 		sum = 0.0;
 		for j in 0..num_feat {
-			sum += (invrt_mtrx[i][j] * y_x_trans[j]) as f32;
+			sum += (invrt_mtrx[i][j] * y_x_trans[j]);
 		}
 		result.push(sum);
 	}

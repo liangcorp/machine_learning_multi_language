@@ -36,7 +36,7 @@ fn main() {
 
     let alpha = 0.01;   // the learning speed
     let num_iters = 400;    // Number of gradient descent iterations
-    let mut theta: Vec<f32> = vec![0.0; x[0].len()];
+    let mut theta: Vec<f64> = vec![0.0; x[0].len()];
 
     let (ex_2_nor_y, y_mean, y_std_dev)
                     = feature_scaling::mean_normal_y(&y);

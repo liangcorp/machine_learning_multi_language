@@ -19,16 +19,16 @@
 /// ```
 ///
 
-pub fn get_thetas( x: &Vec<Vec<f32>>, y: &Vec<f32>,
-                        alpha: f32, theta: &mut Vec<f32>,
-                        num_iters: u32) -> Box<Vec<f32>> {
+pub fn get_thetas( x: &Vec<Vec<f64>>, y: &Vec<f64>,
+                        alpha: f64, theta: &mut Vec<f64>,
+                        num_iters: u32) -> Box<Vec<f64>> {
 
     let num_train = y.len();
     let num_feat = theta.len();
 
-    let mut sum: f32;
-    let mut tmp_theta: Vec<f32>;
-    let mut h_x: Vec<f32> = Vec::new();
+    let mut sum: f64;
+    let mut tmp_theta: Vec<f64>;
+    let mut h_x: Vec<f64> = Vec::new();
 
     for _ in 0..num_iters {
         h_x.clear();
@@ -53,7 +53,7 @@ pub fn get_thetas( x: &Vec<Vec<f32>>, y: &Vec<f32>,
             }
 
             theta[j] = tmp_theta[j]
-                        - (alpha * sum / (num_train as f32));
+                        - (alpha * sum / (num_train) as f64);
         }
     }
 

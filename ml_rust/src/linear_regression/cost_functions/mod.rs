@@ -14,14 +14,14 @@
 /// J = sum(((theta[i] * X[j]) - y).^2 ./(2 * m), "all");
 /// ```
 ///
-pub fn get_cost(x: &Vec<Vec<f32>>, y: &Vec<f32>,
-                        theta: &Vec<f32>) -> f32 {
+pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>,
+                        theta: &Vec<f64>) -> f64 {
     let num_train;
     let num_feat = theta.len();
-    let mut h_x: Vec<f32> = Vec::new();
+    let mut h_x: Vec<f64> = Vec::new();
 
-    let mut j_theta: f32 = 0.0;     /* The cost */
-    let mut sum: f32;
+    let mut j_theta: f64 = 0.0;     /* The cost */
+    let mut sum: f64;
 
     if x.len() == y.len() {
         num_train = y.len();
@@ -46,7 +46,7 @@ pub fn get_cost(x: &Vec<Vec<f32>>, y: &Vec<f32>,
 
     for j in 0..num_train {
         j_theta += (h_x[j] - y[j]) * (h_x[j] - y[j])
-                    / (2 * num_train) as f32;
+                    / (2 * num_train) as f64;
     }
 
     j_theta
