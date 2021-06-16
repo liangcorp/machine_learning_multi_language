@@ -1,4 +1,4 @@
-//! Simplified cost function with one feature
+//! Cost function with multiple features
 //!
 //! This crate is a collection of functions to perform
 //! calculation of J(theta)

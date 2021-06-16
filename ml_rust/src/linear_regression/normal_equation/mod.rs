@@ -1,16 +1,21 @@
 //! # Implementation of normal equation
 //! Currently only support 2D matrix of X * X.transposed
-///
-/// Use normal equation to calculate theta
-///```
-/// theta = (X.trans * X)^-1 * X.trans * y
-///```
-/// - No need to choose alpha
-/// - Don't need to iterate
-/// - Slow if number of features is very large (10,000+)
-///
 
-fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
+///
+/// # Calculate the Determinant (der) of a matrix
+///
+/// Calculate the Determinant (der) of larger scale matrix
+/// (shortcut method)
+///```
+/// M = [[A, B, C],
+///	 [D, E, F],
+///	 [G, H, I]];
+///
+///der = A * E * I + B * F * G + C * D * H
+///		- C * E * G - A * F * H - B * D * I;
+///```
+///
+pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 	let mut z: i32;
 	let mut determinant: f64 = 0.0;
 	let mut multiply: f64;
@@ -30,9 +35,9 @@ fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 		/*
 			Calculate the Determinant (der) of larger scale matrix
 			(shortcut method)
-			M = [[A, B, C], A, B
-				[D, E, F], D, E
-				[G, H, I]] G, H;
+			M = [[A, B, C]
+				[D, E, F]
+				[G, H, I]]
 
 			der = A * E * I + B * F * G + C * D * H
 					- C * E * G - A * F * H - B * D * I;
@@ -85,12 +90,30 @@ fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 	determinant
 }
 
-fn get_invert(matrix: &Vec<Vec<f64>>) -> Box<Vec<Vec<f64>>> {
+///# Calculate inverted matrix from provided matrix
+/// Currently using adjugate matrix
+///```
+///	A = [[a11, a12, a13, a14],
+///		[a21, a22, a23, a24],
+///		[a31, a32, a33, a34],
+///		[a41, a42, a43, a44]];
+///```
+///
+pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Box<Vec<Vec<f64>>> {
 	let mut result: Vec<Vec<f64>> = Vec::new();
 
 	Box::new(result)
 }
 
+///
+/// Use normal equation to calculate theta
+///```
+/// theta = (X.trans * X)^-1 * X.trans * y
+///```
+/// - No need to choose alpha
+/// - Don't need to iterate
+/// - Slow if number of features is very large (10,000+)
+///
 pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Box<Vec<f64>> {
 
 	let mut result: Vec<f64> = Vec::new();
@@ -188,7 +211,7 @@ pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Box<Vec<f64>> {
 	for i in 0..num_feat {
 		sum = 0.0;
 		for j in 0..num_feat {
-			sum += (invrt_mtrx[i][j] * y_x_trans[j]);
+			sum += invrt_mtrx[i][j] * y_x_trans[j];
 		}
 		result.push(sum);
 	}

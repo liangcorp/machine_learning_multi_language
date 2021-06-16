@@ -1,4 +1,4 @@
-//! Simplified gradient descent with one feature
+//! Gradient descent with multiple features
 //!
 //! This crate is a collection of functions to perform
 //! calculation of gradient descent
