@@ -1,9 +1,7 @@
 use std::path::Path;
 
-mod feature_scaling;
-mod read_data;
-
-use ml_rust::linear_regression;
+use ml_rust::{linear_regression, read_data};
+// mod feature_scaling;
 
 fn main() {
     let path = Path::new("../data_files/ex1data1.txt");
