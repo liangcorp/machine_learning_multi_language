@@ -99,9 +99,9 @@ int main(int argc, char *argv[])
 
 
     /*
-    	A = [[3.0, 0.0, 2.0],
-			[2.0, 0.0, -2.0],
-			[0.0, 1.0, 1.0]]
+    	A = [[4, -1, 1],
+			[4, 5, 3],
+			[-2, 0, 0]]
 
      */
 
@@ -123,8 +123,25 @@ int main(int argc, char *argv[])
     matrix[2][1] = 1L;
     matrix[2][2] = 1L;
 
-   printf("%lf\n", get_determinant(matrix, 3));
 
+    double **m_inverted = get_invert(matrix, 3);
+
+    for (i = 0; i < 3; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            printf("%lf ", m_inverted[i][j]);
+        }
+        printf("\n");
+    }
+
+    for (i = 0; i < 3; i++)
+        free(m_inverted[i]);
+    free(m_inverted);
+
+    for (i = 0; i < 3; i++)
+        free(matrix[i]);
+    free(matrix);
 
     return 0;
 }

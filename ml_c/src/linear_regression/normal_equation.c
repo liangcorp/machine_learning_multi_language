@@ -71,7 +71,7 @@ double get_determinant(double **matrix, unsigned int size)
 			// starting column (decrease each loop)
 			for (j = 0; j < size; j++)
 			{
-				if (z < 0)
+				if (z == -1)
 				{
 					z = size - 1;	// Reset to column 0
 				}
@@ -258,7 +258,7 @@ double** get_invert(double **matrix, unsigned int size)
 	{
 		// Calculate matrix of minors
 		m_deter = calloc(size_minor, sizeof(double));
-		for (i = 0; i < size; i++)
+		for (i = 0; i < size_minor; i++)
 		{
 			m_deter[i] = calloc(size_minor, sizeof(double));
 		}
@@ -271,29 +271,35 @@ double** get_invert(double **matrix, unsigned int size)
 
 		m = 0;
 		n = 0;
+		int new_i = 0;
+		int new_j = 0;
+
 		for (i = 0; i < size; i++)
 		{
 			for (j = 0; j < size; j++)
 			{
-				while (m < size_minor)
+				new_i = 0;
+				for (m = 0; m < size; m++)
 				{
-					while (n < size_minor)
+					new_j = 0;
+					for (n = 0; n < size; n++)
 					{
 						if (m != i && n != j)
 						{
-							m_deter[m][n] = matrix[i][j];
-							n++;
+							m_deter[new_i][new_j] = matrix[m][n];
+							new_j++;
 						}
 					}
+
 					if (m != i && n != j)
 					{
-						m++;
+						new_i++;
 					}
-				}
+				}	// end of m
 
 				m_minors[i][j] = get_determinant(m_deter, size_minor);
-			}
-		}
+			}	// end of j
+		}	// end of i
 
 		// Matrix of Cofactors
 		for (i = 0; i < size; i++)
@@ -328,31 +334,23 @@ double** get_invert(double **matrix, unsigned int size)
 
 		for (i = 0; i < size; i++)
 		{
-			printf("[");
 			for (j = 0; j < size; j++)
 			{
 				m_invert[i][j] = m_trans[i][j] / determinant;
-				printf("%lf ", m_invert[i][j]);
 			}
-			printf("]\n");
 		}
 
 		for (i = 0; i < size; i++)
-		{
 			free(m_trans[i]);
-		}
+		free(m_trans);
 
 		for (i = 0; i < size ; i++)
-		{
 			free(m_minors[i]);
-		}
+		free(m_minors);
 
 		for (i = 0; i < size_minor; i++)
-		{
 			free(m_deter[i]);
-		}
-		free(m_trans);
-		free(m_minors);
+
 		free(m_deter);
 	}
 
