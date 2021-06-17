@@ -27,6 +27,9 @@ fn main() {
 
     println!("Found thetas using Normal Equation: {:?}",
                 linear_regression::normal_equation::get_theta(&x, &y));
+
+
+
 /*
     let path = Path::new("../data_files/ex1data2.txt");
     let (x_ptr, y_ptr) = read_data::get_data(&path);

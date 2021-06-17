@@ -3,16 +3,9 @@
 ///
 /// # Calculate the Determinant (der) of a matrix
 ///
-/// Calculate the Determinant (der) of larger scale matrix
-/// (shortcut method)
-///```
-/// M = [[A, B, C],
-///	 [D, E, F],
-///	 [G, H, I]];
-///
-///der = A * E * I + B * F * G + C * D * H
-///		- C * E * G - A * F * H - B * D * I;
-///```
+/// Calculate the Determinant (der) of larger scale matrix.
+/// Tested for 2x2, 3x3 and 4x4 matrixes.
+/// Implementation is not optimized for super large matrixes.
 ///
 pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 	let mut z: i32;
@@ -24,7 +17,7 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 		panic!("Matrix not symmetrical");
 	}
 
-	if matrix.len() == 2 {
+	if matrix.len() == 2 {	// 2x2 matrixes
 		/*
 			Calculate the Determinant (der) of 2D matrix
 			M = [[A, B],
@@ -34,7 +27,7 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 
 		determinant = matrix[0][0] * matrix[1][1]
 					- matrix[0][1] * matrix[1][0];
-	} else {
+	} else if matrix.len() == 3 {	// 3x3 matrixes
 		/*
 			Calculate the Determinant (der) of larger scale matrix
 			(shortcut method)
@@ -87,6 +80,69 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 			// last part of determinant
 			determinant -= multiply;
 		}
+	} else { // 4x4 and above matrixes
+		let mut cofactor_row: Vec<f64> = Vec::new();
+		let mut cofactor: Vec<Vec<f64>> = Vec::new();
+		let mut first_col_elemnt: Vec<f64> =Vec::new();
+		let mut deter_list: Vec<f64> = Vec::new();
+
+		let j = 0;
+
+		/*
+			Use self calling function to further reduce the
+			length of matrix.
+
+			E.g. Divide 4x4 into 4 3x3 matrix using cofactor of
+			first element of each row.
+			Calculate the determinant of 3x3.
+			Return the 4 results upstream for calculation of
+			determinant of 4x4.
+
+			Formula for calculating determinant of 4x4 matrix:
+			|A| = A[0][0] * D[0] - A[1][0] * D[1]
+				+ A[2][0] * D[2] - A[3][0] * D[3]
+		*/
+		for i in 0..num_feat {
+			// Save first element of each row
+			first_col_elemnt.push(matrix[i][j]);
+
+			/*
+			Create cofactor matrix for first element
+			of each row.
+		*/
+			for m in 0..num_feat {
+				for n in 0..num_feat {
+					if m != i && n != j {
+						cofactor_row.push(matrix[m][n]);
+					}
+				}
+				if cofactor_row.len() != 0 {
+
+					cofactor.push(cofactor_row.clone());
+					cofactor_row.clear();
+				}
+			}
+
+			// List of determinants for cofactor matrixes
+			deter_list.push(get_determinant(&cofactor));
+			cofactor.clear();
+		}
+
+		/*
+			Performing the formula for calculating determinant
+			of large scale matrix.
+
+			Sample formula for 4x4 matrix:
+			|A| = A[0][0] * D[0] - A[1][0] * D[1]
+				+ A[2][0] * D[2] - A[3][0] * D[3]
+		*/
+		for i in 0..first_col_elemnt.len() {
+			if i % 2 == 0 {
+				determinant += first_col_elemnt[i] * deter_list[i];
+			} else {
+				determinant -= first_col_elemnt[i] * deter_list[i];
+			}
+		}
 	}
 
 	determinant
@@ -95,102 +151,142 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 ///# Calculate inverted matrix from provided matrix
 /// Currently using adjugate matrix
 ///```
-///	A = [[3.0, 0.0, 2.0],
-///  [2.0, 0.0, -2.0],
-///  [0.0, 1.0, 1.0]];
+///Formula:
+///  A^-1 = 1/|A| * (A~)
 ///
-/// Matrix of Minors = [[0*1 - (-2)*1, 2*1 - (-2)*0, 2*1 - 0*0],
-/// 					[0*1 - 2*1, 3*1 - 2*0, 3*1 - 0*0]]
-/// A^-1 = 1/|A| * (A~)
+/// Sample 3x3 matrix:
+///	A = [[3.0, 0.0, 2.0],
+///  		 [2.0, 0.0, -2.0],
+///  		 [0.0, 1.0, 1.0]]
+///
+/// Determinant = 10
+///
+/// Matrix of Minors = [[0*1 - (-2)*1,	2*1 - (-2)*0,	2*1 - 0*0],
+/// 					 [0*1 - 2*1,	3*1 - 2*0,		3*1 - 0*0],
+/// 					 [0*(-2) - 2*0,	3*(-2) - 2*2,	3*0 - 0*2]]
+///
+/// 				= [[2, 2, 2],
+/// 				   [-2, 3, 3],
+/// 				   [0, -10, 0]]
+///
+/// Matrix of Cofactors = [[2, -2, 2],
+/// 						[2, 3, -3],
+/// 						[0, 10, 0]]
+///
+/// Transposed Matrix = [[2, 2, 0],
+/// 					  [-2, 3, 10]
+/// 					  [2, -3, 0]]
+///
+///	Inverted Matrix = 1/determinant * Transposed Matrix
+///
+/// A^-1 = [[2, 2, 0],
+/// 		 [-2, 3, 10]
+/// 		 [2, -3, 0]] / 10
+///
+/// 	  = [[0.2, 0.2, 0],
+/// 		 [-0.2, 0.3, 1],
+/// 		 [0.2, -0.3, 0]]
 ///
 /// ```
 ///
 pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Box<Vec<Vec<f64>>> {
 
-	let matrix = vec![vec![3.0, 0.0, 2.0],
+/* 	let matrix = vec![vec![1.0, 1.0, 1.0, -1.0],
+					vec![1.0, 1.0, -1.0, 1.0],
+					vec![1.0, -1.0, 1.0, 1.0],
+					vec![-1.0, 1.0, 1.0, 1.0]];
+ */
+/* 	let matrix = vec![vec![3.0, 0.0, 2.0],
 					vec![2.0, 0.0, -2.0],
 					vec![0.0, 1.0, 1.0]];
 
-	let mut mtrx_der: Vec<Vec<f64>> = Vec::new();
-	let mut mtrx_der_row: Vec<f64> = Vec::new();
-
-	let mut mtrx_minors: Vec<Vec<f64>> = Vec::new();
-	let mut mtrx_minors_row: Vec<f64> = Vec::new();
-
-	let mut mtrx_trans: Vec<Vec<f64>>;
-
+	println!("Determinant: {}", get_determinant(&matrix));
+ */
 	let mut mtrx_result: Vec<Vec<f64>>;
-
 	let original_der: f64 = get_determinant(&matrix);
-	println!("Determinant: {}", original_der);
 
-	let row = matrix.len();
-	let col = matrix[0].len();
+	if matrix.len() == 2 {
+		mtrx_result = matrix.clone();
 
-	if row != col {
-		panic!("Matrix not symmetrical");
-	}
+		mtrx_result[0][0] = matrix[1][1] / original_der;
+		mtrx_result[1][1] = matrix[0][0] / original_der;
+		mtrx_result[0][1] = -matrix[0][1] / original_der;
+		mtrx_result[1][0] = -matrix[1][0] / original_der;
 
-	// Calculate matrix of minors
-	for i in 0..row {
+	} else {
+		let mut mtrx_der: Vec<Vec<f64>> = Vec::new();
+		let mut mtrx_der_row: Vec<f64> = Vec::new();
 
-		for j in 0..col {
+		let mut mtrx_minors: Vec<Vec<f64>> = Vec::new();
+		let mut mtrx_minors_row: Vec<f64> = Vec::new();
+
+		let mut mtrx_trans: Vec<Vec<f64>>;
+
+		let row = matrix.len();
+		let col = matrix[0].len();
+
+		if row != col {
+			panic!("Matrix not symmetrical");
+		}
+
+		// Calculate matrix of minors
+		for i in 0..row {
+
+			for j in 0..col {
 
 
-			for m in 0..row {
+				for m in 0..row {
 
-				for n in 0..col {
-					if m != i && n != j {
-						mtrx_der_row.push(matrix[m][n]);
-
+					for n in 0..col {
+						if m != i && n != j {
+							mtrx_der_row.push(matrix[m][n]);
+						}
 					}
+					if mtrx_der_row.len() != 0 {
+						mtrx_der.push(mtrx_der_row.clone());
+					}
+					mtrx_der_row.clear();
+
 				}
-				if mtrx_der_row.len() != 0 {
-					mtrx_der.push(mtrx_der_row.clone());
+				mtrx_minors_row.push(get_determinant(&mtrx_der));
+				mtrx_der.clear();
+			}
+			mtrx_minors.push(mtrx_minors_row.clone());
+			mtrx_minors_row.clear();
+		}
+		// println!("Matrix minor: {:?}", mtrx_minors);
+
+		// Matrix of Cofactors
+		for i in 0..row {
+			for j in 0..col {
+				if i % 2 == 0 && j % 2 != 0 {
+					mtrx_minors[i][j] *= -1.0;
+				} else if i % 2 != 0 && j % 2 == 0 {
+					mtrx_minors[i][j] *= -1.0;
 				}
-				mtrx_der_row.clear();
-
-			}
-			mtrx_minors_row.push(get_determinant(&mtrx_der));
-			mtrx_der.clear();
-		}
-		mtrx_minors.push(mtrx_minors_row.clone());
-		mtrx_minors_row.clear();
-	}
-
-	println!("{:?}", mtrx_minors);
-
-	// Matrix of Cofactors
-	for i in 0..row {
-		for j in 0..col {
-			if i % 2 == 0 && j % 2 != 0 {
-				mtrx_minors[i][j] *= -1.0;
-			} else if i % 2 != 0 && j % 2 == 0 {
-				mtrx_minors[i][j] *= -1.0;
 			}
 		}
-	}
-	println!("{:?}", mtrx_minors);
+		// println!("Cofactors of matrix minor: {:?}", mtrx_minors);
 
-	// Transpose matrix
-	mtrx_trans = mtrx_minors.clone();
+		// Transpose matrix
+		mtrx_trans = mtrx_minors.clone();
 
-	for i in 0..row {
-		for j in 0..col {
-			mtrx_trans[j][i] = mtrx_minors[i][j];
+		for i in 0..row {
+			for j in 0..col {
+				mtrx_trans[j][i] = mtrx_minors[i][j];
+			}
 		}
-	}
-	println!("{:?}", mtrx_trans);
+		// println!("Matrix transposed: {:?}", mtrx_trans);
 
-	mtrx_result = mtrx_trans.clone();
+		mtrx_result = mtrx_trans.clone();
 
-	for i in 0..row {
-		for j in 0..col {
-			mtrx_result[i][j] = mtrx_trans[i][j] / original_der;
+		for i in 0..row {
+			for j in 0..col {
+				mtrx_result[i][j] = mtrx_trans[i][j] / original_der;
+			}
 		}
+		// println!("Inverted matrix: {:?}", mtrx_result);
 	}
-
-	println!("{:?}", mtrx_result);
 
 	Box::new(mtrx_result)
 }
@@ -218,7 +314,7 @@ pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Box<Vec<f64>> {
 	if x.len() == y.len() {
 		num_train = x.len();
 	} else {
-		panic!("Miss matching training set numbers");
+		panic!("Mis-matching training set");
 	}
 
 	/*
@@ -257,23 +353,7 @@ pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Box<Vec<f64>> {
 	/*
 		Calculate inverted X * X.transposed
 	*/
-	let mut invrt_mtrx = mltply_rslt.clone();
-
-	get_invert(&invrt_mtrx);
-
-	if mltply_rslt.len() == 2 {
-		/*
-			Currently only support 2x2 matrix
-		*/
-		// invrt_mtrx[0][0] = mltply_rslt[1][1] / determinant;
-		// invrt_mtrx[1][1] = mltply_rslt[0][0] / determinant;
-		// invrt_mtrx[0][1] = -mltply_rslt[0][1] / determinant;
-		// invrt_mtrx[1][0] = -mltply_rslt[1][0] / determinant;
-	} else {
-		/*
-			@TODO Support inverting large scale matrix
-		*/
-	}
+	let invrt_mtrx = get_invert(&mltply_rslt);
 
 	/*
 		Calculate y * X.transposed
