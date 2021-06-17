@@ -47,11 +47,11 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 				if z >= num_feat as i32 {
 					z = 0;	// Reset to column 0
 				}
-				// A * E * I + B * F * G + C * D * H
+
 				multiply *= matrix[j][z as usize];
 				z += 1;		// Move to next column
 			}
-			// first part of determinant
+			// A * E * I + B * F * G + C * D * H
 			determinant += multiply;
 
 		}
@@ -66,11 +66,10 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 					z = (num_feat - 1) as i32; // Reset to column 0
 				}
 
-				// C * E * G - A * F * H - B * D * I
 				multiply *= matrix[j][z as usize];
 				z -= 1;		// Move to last column
 			}
-			// last part of determinant
+			// C * E * G - A * F * H - B * D * I
 			determinant -= multiply;
 		}
 	} else { // 4x4 and above matrixes
