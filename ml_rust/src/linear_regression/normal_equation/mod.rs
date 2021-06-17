@@ -300,7 +300,7 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Box<Vec<Vec<f64>>> {
 ///
 pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Box<Vec<f64>> {
 
-	let mut result: Vec<f64> = Vec::new();
+	let mut theta: Vec<f64> = Vec::new();
 	let mut mltply_rslt: Vec<Vec<f64>> = Vec::new();
 	let mut mltply_rslt_row: Vec<f64> = Vec::new();
 
@@ -376,8 +376,8 @@ pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Box<Vec<f64>> {
 		for j in 0..num_feat {
 			sum += invrt_mtrx[i][j] * y_x_trans[j];
 		}
-		result.push(sum);
+		theta.push(sum);
 	}
 
-	Box::new(result)
+	Box::new(theta)
 }
