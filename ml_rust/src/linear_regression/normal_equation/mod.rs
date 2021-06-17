@@ -39,13 +39,6 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 					- C * E * G - A * F * H - B * D * I;
 		*/
 
-
-		/*
-			let matrix: Vec<Vec<f64>> = vec![vec![0.0, 0.1, 0.2],
-											vec![1.0, 1.1, 1.2],
-											vec![2.0, 2.1, 2.2]];
-			let num_feat = matrix.len();
- 		*/
 		for i in 0..num_feat {
 			z = i as i32;	// starting column (increase each loop)
 			multiply = 1.0;
@@ -107,9 +100,9 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 			first_col_elemnt.push(matrix[i][j]);
 
 			/*
-			Create cofactor matrix for first element
-			of each row.
-		*/
+				Create cofactor matrix for first element
+				of each row.
+			*/
 			for m in 0..num_feat {
 				for n in 0..num_feat {
 					if m != i && n != j {
@@ -191,17 +184,6 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 ///
 pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Box<Vec<Vec<f64>>> {
 
-/* 	let matrix = vec![vec![1.0, 1.0, 1.0, -1.0],
-					vec![1.0, 1.0, -1.0, 1.0],
-					vec![1.0, -1.0, 1.0, 1.0],
-					vec![-1.0, 1.0, 1.0, 1.0]];
- */
-/* 	let matrix = vec![vec![3.0, 0.0, 2.0],
-					vec![2.0, 0.0, -2.0],
-					vec![0.0, 1.0, 1.0]];
-
-	println!("Determinant: {}", get_determinant(&matrix));
- */
 	let mut mtrx_result: Vec<Vec<f64>>;
 	let original_der: f64 = get_determinant(&matrix);
 
@@ -317,13 +299,6 @@ pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Box<Vec<f64>> {
 		panic!("Mis-matching training set");
 	}
 
-	/*
-		Uncomment the following to test (X * X.transposed):
-		let x: Vec<Vec<f64>> = vec![vec![0.0, 1.0],
-									vec![2.0, 3.0]];
-		num_train = x.len();
-
-	*/
 	num_feat = x[0].len();
 
 	/*
