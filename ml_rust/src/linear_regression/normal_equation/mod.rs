@@ -78,8 +78,6 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 		let mut first_col_elemnt: Vec<f64> =Vec::new();
 		let mut deter_list: Vec<f64> = Vec::new();
 
-		let j = 0;
-
 		/*
 			Use self calling function to further reduce the
 			length of matrix.
@@ -117,6 +115,7 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 			|A| = Cof_A[0][0] * D[0] - Cof_A[1][0] * D[1]
 				+ Cof_A[2][0] * D[2] - Cof_A[3][0] * D[3]
 		*/
+		let j = 0;
 		for i in 0..num_feat {
 			// Save first element of each row
 			first_col_elemnt.push(matrix[i][j]);
@@ -235,12 +234,8 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Box<Vec<Vec<f64>>> {
 
 		// Calculate matrix of minors
 		for i in 0..row {
-
 			for j in 0..col {
-
-
 				for m in 0..row {
-
 					for n in 0..col {
 						if m != i && n != j {
 							mtrx_der_row.push(matrix[m][n]);
