@@ -51,3 +51,8 @@ normal_multi_t* mean_normal_multiple(double **v,
                                     int num_feat);
 
 normal_single_t* mean_normal_single(double *v, int num_train);
+
+double get_determinant(double** matrix, unsigned int m_size);
+double** get_invert(double** matrix, unsigned int m_size);
+double* normal_equation(double** X, double* y,
+                    unsigned int num_train, unsigned int num_feat);

@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
 
     int i, j;
 
-    int num_train = 0;  // number of training set
-    int num_feat = 0;   // number of features
+    unsigned int num_train = 0;  // number of training set
+    unsigned int num_feat = 0;   // number of features
 
     double **X = NULL;  // features
     double *y = NULL;   // results
@@ -38,13 +38,13 @@ int main(int argc, char *argv[])
 
     double *theta = calloc(num_feat, sizeof(double));
 
-    printf("Thetas are [0.0, 0.0], J(theta) is %lf\n",
+    printf("Thetas are [0.0, 0.0]. The cost is %lf\n",
                     cost_function(X, y, theta, num_train, num_feat));
 
     theta[0] = -1.0;
     theta[1] = 2.0;
 
-    printf("Thetas are [-1.0, 2.0], J(theta) is %lf\n",
+    printf("Thetas are [-1.0, 2.0]. The cost is %lf\n",
                     cost_function(X, y, theta, num_train, num_feat));
 
     float alpha = 0.01;
@@ -65,6 +65,16 @@ int main(int argc, char *argv[])
     }
     printf("]\n");
 
+
+    double *final_theta_ne = normal_equation(X, y, num_train, num_feat);
+    printf("Found thetas using Normal Equation: [");
+
+    for (i = 0; i < num_feat; i++)
+    {
+        printf("%lf ", final_theta_ne[i]);
+    }
+    printf("]\n");
+
     /*
     normal_single_t* result_y = mean_normal_single(y, num_train);
     free(result_y->v);
@@ -80,11 +90,41 @@ int main(int argc, char *argv[])
     free(y);
     free(theta);
     free(final_theta);
+    free(final_theta_ne);
     free(data_set);
 
     #ifdef DEBUG
         printf("Freed all memory\n");
     #endif
+
+
+    /*
+    	A = [[3.0, 0.0, 2.0],
+			[2.0, 0.0, -2.0],
+			[0.0, 1.0, 1.0]]
+
+     */
+
+    double **matrix = NULL;
+
+    matrix = calloc(3, sizeof(double));
+    for (i = 0; i < 3; i++)
+    {
+        matrix[i] = calloc(3, sizeof(double));
+    }
+
+    matrix[0][0] = 3L;
+    matrix[0][1] = 0L;
+    matrix[0][2] = 2L;
+    matrix[1][0] = 2L;
+    matrix[1][1] = 0L;
+    matrix[1][2] = -2L;
+    matrix[2][0] = 0L;
+    matrix[2][1] = 1L;
+    matrix[2][2] = 1L;
+
+   printf("%lf\n", get_determinant(matrix, 3));
+
 
     return 0;
 }

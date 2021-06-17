@@ -3,22 +3,24 @@ CC = gcc
 all:
 	mkdir -p bin libs
 	${CC} -g -fPIC ./src/read_data.c -shared -o ./libs/libreaddata.so
-	${CC} -g -fPIC ./src/linear_regression/cost_function.c -shared -o ./libs/libcostfn.so
-	${CC} -g -fPIC ./src/linear_regression/gradient_descent.c -shared -o ./libs/libgrades.so
+	${CC} -g -fPIC ./src/linear_regression/cost_function.c -shared -o ./libs/liblrcostfn.so
+	${CC} -g -fPIC ./src/linear_regression/gradient_descent.c -shared -o ./libs/liblrgrades.so
+	${CC} -g -fPIC ./src/linear_regression/normal_equation.c -shared -o ./libs/liblrnorequa.so
 	${CC} -g -fPIC ./src/feature_scale.c -shared -o ./libs/libfeatscale.so
 	${CC} -g -I ./libs/ -c ./src/main.c -o ./libs/main.o
-	${CC} -g -o ./bin/main ./libs/main.o -L ./libs/ -lm -l costfn -l grades -l readdata -l featscale
+	${CC} -g -o ./bin/main ./libs/main.o -L ./libs/ -lm -l lrcostfn -l lrgrades -l readdata -l featscale -l lrnorequa
 
 	chmod +x ./bin/main
 
 debug:
 	mkdir -p bin libs
 	${CC} -D DEBUG -g -fPIC ./src/read_data.c -shared -o ./libs/libreaddata.so
-	${CC} -D DEBUG -g -fPIC ./src/linear_regression/cost_function.c -shared -o ./libs/libcostfn.so
-	${CC} -D DEBUG -g -fPIC ./src/linear_regression/gradient_descent.c -shared -o ./libs/libgrades.so
+	${CC} -D DEBUG -g -fPIC ./src/linear_regression/cost_function.c -shared -o ./libs/liblrcostfn.so
+	${CC} -D DEBUG -g -fPIC ./src/linear_regression/gradient_descent.c -shared -o ./libs/liblrgrades.so
+	${CC} -D DEBUG -g -fPIC ./src/linear_regression/normal_equation.c -shared -o ./libs/liblrnorequa.so
 	${CC} -D DEBUG -g -fPIC ./src/feature_scale.c -shared -o ./libs/libfeatscale.so
 	${CC} -D DEBUG -g -I ./libs/ -c ./src/main.c -o ./libs/main.o
-	${CC} -g -o ./bin/main ./libs/main.o -L ./libs/ -lm -l grades -l costfn -l readdata -l featscale
+	${CC} -g -o ./bin/main ./libs/main.o -L ./libs/ -lm -l lrgrades -l lrcostfn -l readdata -l featscale -l lrnorequa
 
 	chmod +x ./bin/main
 
