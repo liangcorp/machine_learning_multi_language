@@ -19,6 +19,9 @@
 int main(int argc, char *argv[])
 {
 
+    #ifdef TIMER
+        clock_t cpu_start = clock();    /* Initial processor time */
+    #endif
     data_t *data_set = NULL;
 
     int i, j;
@@ -93,9 +96,15 @@ int main(int argc, char *argv[])
     free(final_theta_ne);
     free(data_set);
 
-    #ifdef DEBUG
+    #ifdef TIMER
         printf("Freed all memory\n");
     #endif
+    #ifdef MAINTIME
 
+        clock_t cpu_end = clock();          /* Final cpu time */
+
+        printf("main completed in %lf seconds\n",
+                    ((double)(cpu_end - cpu_start)) / CLOCKS_PER_SEC);
+    #endif
     return 0;
 }

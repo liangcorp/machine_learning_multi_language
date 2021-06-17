@@ -14,6 +14,9 @@
 double cost_function(double** X, double* y, double* theta,
                                 int num_train, int num_feat)
 {
+    #ifdef TIMER
+        clock_t cpu_start = clock();    /* Initial processor time */
+    #endif
     /*
         Creating the algorithm for the cost function.
         X and y are the training sets.
@@ -34,9 +37,7 @@ double cost_function(double** X, double* y, double* theta,
     double sum = 0.0L;
     double *h_x = NULL;
 
-    #ifdef DEBUG
-        clock_t cpu_start = clock();    /* Initial processor time */
-    #endif
+
 
     h_x = calloc(num_train, sizeof(double));
 
@@ -56,11 +57,11 @@ double cost_function(double** X, double* y, double* theta,
                     / (2 * (double)num_train);
     }
 
-    #ifdef DEBUG
+    #ifdef TIMER
 
         clock_t cpu_end = clock();          /* Final cpu time */
 
-        printf("CPU time is %lf seconds\n",
+        printf("Cost function completed in %lf seconds\n",
                     ((double)(cpu_end - cpu_start)) / CLOCKS_PER_SEC);
     #endif
 

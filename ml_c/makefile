@@ -24,6 +24,18 @@ debug:
 
 	chmod +x ./bin/main
 
+timer:
+	mkdir -p bin libs
+	${CC} -D TIMER -g -fPIC ./src/read_data.c -shared -o ./libs/libreaddata.so
+	${CC} -D TIMER -g -fPIC ./src/linear_regression/cost_function.c -shared -o ./libs/liblrcostfn.so
+	${CC} -D TIMER -g -fPIC ./src/linear_regression/gradient_descent.c -shared -o ./libs/liblrgrades.so
+	${CC} -D TIMER -g -fPIC ./src/linear_regression/normal_equation.c -shared -o ./libs/liblrnorequa.so
+	${CC} -D TIMER -g -fPIC ./src/feature_scale.c -shared -o ./libs/libfeatscale.so
+	${CC} -D TIMER -g -I ./libs/ -c ./src/main.c -o ./libs/main.o
+	${CC} -D TIMER -g -o ./bin/main ./libs/main.o -L ./libs/ -lm -l lrgrades -l lrcostfn -l readdata -l featscale -l lrnorequa
+
+	chmod +x ./bin/main
+
 clean:
 	rm -rf ./bin/*
 	rm -rf ./libs/*

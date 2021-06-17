@@ -335,6 +335,9 @@ double** get_invert(double **matrix, unsigned int size)
 double* normal_equation(double **X, double *y,
 				unsigned int num_train, unsigned int num_feat)
 {
+	#ifdef TIMER
+        clock_t cpu_start = clock();    /* Initial processor time */
+    #endif
 	unsigned int i, j, z;
 	double *theta = NULL;
 	double **m_X_X_trans = NULL;
@@ -419,5 +422,12 @@ double* normal_equation(double **X, double *y,
 	free(m_X_X_trans);
 	free(y_x_trans);
 
+	#ifdef TIMER
+
+        clock_t cpu_end = clock();          /* Final cpu time */
+
+        printf("Normal equation completed in %lf seconds\n",
+                    ((double)(cpu_end - cpu_start)) / CLOCKS_PER_SEC);
+    #endif
 	return theta;
 }
