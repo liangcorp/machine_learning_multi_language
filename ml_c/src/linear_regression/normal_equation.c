@@ -54,9 +54,8 @@ double get_determinant(double **matrix, unsigned int size)
 			for (j = 0; j < size; j++)
 			{
 				if (z >= size)
-				{
 					z = 0;	// Reset to column 0
-				}
+
 				multiply *= matrix[j][z];
 				z += 1;
 			}
@@ -73,9 +72,8 @@ double get_determinant(double **matrix, unsigned int size)
 			for (j = 0; j < size; j++)
 			{
 				if (z == -1)
-				{
 					z = size - 1;	// Reset to column 0
-				}
+
 				multiply *= matrix[j][z];
 				z -= 1;		// Move to last column
 			}
@@ -237,9 +235,7 @@ double** get_invert(double **matrix, unsigned int size)
 
 	m_invert = calloc(size, sizeof(double));
 	for (i = 0; i < size; i++)
-	{
 		m_invert[i] = calloc(size, sizeof(double));
-	}
 
 	if (size == 2)
 	{
@@ -253,15 +249,11 @@ double** get_invert(double **matrix, unsigned int size)
 		// Calculate matrix of minors
 		m_deter = calloc(size_minor, sizeof(double));
 		for (i = 0; i < size_minor; i++)
-		{
 			m_deter[i] = calloc(size_minor, sizeof(double));
-		}
 
 		m_minors = calloc(size, sizeof(double));
 		for (i = 0; i < size; i++)
-		{
 			m_minors[i] = calloc(size, sizeof(double));
-		}
 
 		int new_i = 0;
 		int new_j = 0;
@@ -284,9 +276,7 @@ double** get_invert(double **matrix, unsigned int size)
 					}
 
 					if (m != i && n != j)
-					{
 						new_i++;
-					}
 				}	// end of m
 
 				m_minors[i][j] = get_determinant(m_deter, size_minor);
@@ -295,42 +285,24 @@ double** get_invert(double **matrix, unsigned int size)
 
 		// Matrix of Cofactors
 		for (i = 0; i < size; i++)
-		{
 			for (j = 0; j < size; j++)
-			{
 				if (i % 2 == 0 && j % 2 != 0)
-				{
 					m_minors[i][j] *= -1;
-				}
 				else if (i % 2 != 0 && j % 2 == 0)
-				{
 					m_minors[i][j] *= -1;
-				}
-			}
-		}
 
 		// Transpose matrix
 		m_trans = calloc(size, sizeof(double));
 		for (i = 0; i < size; i++)
-		{
 			m_trans[i] = calloc(size, sizeof(double));
-		}
 
 		for (i = 0; i < size; i++)
-		{
 			for (j = 0; j < size; j++)
-			{
 				m_trans[j][i] = m_minors[i][j];
-			}
-		}
 
 		for (i = 0; i < size; i++)
-		{
 			for (j = 0; j < size; j++)
-			{
 				m_invert[i][j] = m_trans[i][j] / determinant;
-			}
-		}
 
 		for (i = 0; i < size; i++)
 			free(m_trans[i]);
@@ -383,9 +355,7 @@ double* normal_equation(double **X, double *y,
 	*/
 	m_X_X_trans = calloc(num_feat, sizeof(double));
 	for (i = 0; i < num_feat; i++)
-	{
 		m_X_X_trans[i] = calloc(num_feat, sizeof(double));
-	}
 
 	for (i = 0; i < num_feat; i++)
 	{
@@ -393,9 +363,8 @@ double* normal_equation(double **X, double *y,
 		{
 			sum = 0.0L;
 			for (z = 0; z < num_train; z++)
-			{
 				sum += X[z][i] * X[z][j];
-			}
+
 			m_X_X_trans[i][j] = sum;
 		}
 	}
@@ -414,9 +383,8 @@ double* normal_equation(double **X, double *y,
 	{
 		sum = 0.0L;
 		for (i = 0; i < num_train; i++)
-		{
 			sum += X[i][j] * y[i];
-		}
+
 		y_x_trans[j] = sum;
 	}
 
@@ -436,21 +404,16 @@ double* normal_equation(double **X, double *y,
 	{
 		sum = 0.0L;
 		for (j = 0; j < num_feat; j++)
-		{
 			sum += m_invert[i][j] * y_x_trans[j];
-		}
+
 		theta[i] = sum;
 	}
 
 	for (i = 0; i < num_feat; i++)
-	{
 		free(m_invert[i]);
-	}
 
 	for (i = 0; i < num_feat; i++)
-	{
 		free(m_X_X_trans[i]);
-	}
 
 	free(m_invert);
 	free(m_X_X_trans);
