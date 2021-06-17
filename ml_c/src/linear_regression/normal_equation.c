@@ -225,6 +225,9 @@ double get_determinant(double **matrix, unsigned int size)
 
 double** get_invert(double **matrix, unsigned int size)
 {
+	#ifdef TIMER
+        clock_t cpu_start = clock();    /* Initial processor time */
+    #endif
 	unsigned int i, j, m, n;
 	unsigned int size_minor = size - 1;
 	double **m_deter = NULL;
@@ -317,7 +320,13 @@ double** get_invert(double **matrix, unsigned int size)
 
 		free(m_deter);
 	}
+	#ifdef TIMER
 
+        clock_t cpu_end = clock();          /* Final cpu time */
+
+        printf("Matrix inversion completed in %lf seconds\n",
+                    ((double)(cpu_end - cpu_start)) / CLOCKS_PER_SEC);
+    #endif
 	return m_invert;
 }
 
