@@ -90,9 +90,32 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 			Return the 4 results upstream for calculation of
 			determinant of 4x4.
 
+			A = [[0.0, 0.1, 0.2, 0.3],
+				 [1.0, 1.1, 1.2, 1.3],
+				 [2.0, 2.1, 2.2, 2.3],
+				 [3.0, 3.1, 3.2, 3.3]]
+
+			Calculate the determinant of following 3x3 matrixes (D[3])
+
+			Cof_A[0][0] = [[1.1, 1.2, 1.3],
+					 		[2.1, 2.2, 2.3],
+					 		[3.1, 3.2, 3.3]]
+
+			Cof_A[1][0] = [[0.1, 0.2, 0.3],
+						   [2.1, 2.2, 2.3],
+						   [3.1, 3.2, 3.3]]
+
+			Cof_A[2][0] = [[0.1, 0.2, 0.3],
+						   [1.1, 1.2, 1.3],
+						   [3.1, 3.2, 3.3]]
+
+			Cof_A[3][0] = [[0.1, 0.2, 0.3],
+						   [1.1, 1.2, 1.3],
+						   [2.1, 2.2, 2.3]]
+
 			Formula for calculating determinant of 4x4 matrix:
-			|A| = A[0][0] * D[0] - A[1][0] * D[1]
-				+ A[2][0] * D[2] - A[3][0] * D[3]
+			|A| = Cof_A[0][0] * D[0] - Cof_A[1][0] * D[1]
+				+ Cof_A[2][0] * D[2] - Cof_A[3][0] * D[3]
 		*/
 		for i in 0..num_feat {
 			// Save first element of each row
@@ -125,8 +148,8 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 			of large scale matrix.
 
 			Sample formula for 4x4 matrix:
-			|A| = A[0][0] * D[0] - A[1][0] * D[1]
-				+ A[2][0] * D[2] - A[3][0] * D[3]
+			|A| = Cof_A[0][0] * D[0] - Cof_A[1][0] * D[1]
+				+ Cof_A[2][0] * D[2] - Cof_A[3][0] * D[3]
 		*/
 		for i in 0..first_col_elemnt.len() {
 			if i % 2 == 0 {
