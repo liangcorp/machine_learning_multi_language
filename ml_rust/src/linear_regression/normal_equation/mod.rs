@@ -339,8 +339,6 @@ pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Box<Vec<f64>> {
 		mltply_rslt.push(mltply_rslt_row.clone());
 	}
 
-	// let determinant: f64 = get_determinant(&mltply_rslt);
-
 	/*
 		Calculate inverted X * X.transposed
 	*/
