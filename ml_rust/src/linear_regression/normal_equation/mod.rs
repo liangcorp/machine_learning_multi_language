@@ -1,5 +1,4 @@
 //! # Implementation of normal equation
-//! Currently only support 2D matrix of X * X.transposed
 ///
 /// # Calculate the Determinant (der) of a matrix
 ///
@@ -73,11 +72,6 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 			determinant -= multiply;
 		}
 	} else { // 4x4 and above matrixes
-		let mut cofactor_row: Vec<f64> = Vec::new();
-		let mut cofactor: Vec<Vec<f64>> = Vec::new();
-		let mut first_col_elemnt: Vec<f64> =Vec::new();
-		let mut deter_list: Vec<f64> = Vec::new();
-
 		/*
 			Use self calling function to further reduce the
 			length of matrix.
@@ -115,6 +109,11 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 			|A| = Cof_A[0][0] * D[0] - Cof_A[1][0] * D[1]
 				+ Cof_A[2][0] * D[2] - Cof_A[3][0] * D[3]
 		*/
+		let mut cofactor_row: Vec<f64> = Vec::new();
+		let mut cofactor: Vec<Vec<f64>> = Vec::new();
+		let mut first_col_elemnt: Vec<f64> =Vec::new();
+		let mut deter_list: Vec<f64> = Vec::new();
+
 		let j = 0;
 		for i in 0..num_feat {
 			// Save first element of each row
@@ -206,15 +205,15 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> f64 {
 pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Box<Vec<Vec<f64>>> {
 
 	let mut mtrx_result: Vec<Vec<f64>>;
-	let original_der: f64 = get_determinant(&matrix);
+	let determinant: f64 = get_determinant(&matrix);
 
 	if matrix.len() == 2 {
 		mtrx_result = matrix.clone();
 
-		mtrx_result[0][0] = matrix[1][1] / original_der;
-		mtrx_result[1][1] = matrix[0][0] / original_der;
-		mtrx_result[0][1] = -matrix[0][1] / original_der;
-		mtrx_result[1][0] = -matrix[1][0] / original_der;
+		mtrx_result[0][0] = matrix[1][1] / determinant;
+		mtrx_result[1][1] = matrix[0][0] / determinant;
+		mtrx_result[0][1] = -matrix[0][1] / determinant;
+		mtrx_result[1][0] = -matrix[1][0] / determinant;
 
 	} else {
 		let mut mtrx_der: Vec<Vec<f64>> = Vec::new();
@@ -281,7 +280,7 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Box<Vec<Vec<f64>>> {
 
 		for i in 0..row {
 			for j in 0..col {
-				mtrx_result[i][j] = mtrx_trans[i][j] / original_der;
+				mtrx_result[i][j] = mtrx_trans[i][j] / determinant;
 			}
 		}
 		// println!("Inverted matrix: {:?}", mtrx_result);
