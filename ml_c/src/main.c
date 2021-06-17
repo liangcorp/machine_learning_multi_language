@@ -107,39 +107,48 @@ int main(int argc, char *argv[])
 
     double **matrix = NULL;
 
-    matrix = calloc(3, sizeof(double));
-    for (i = 0; i < 3; i++)
+    matrix = calloc(4, sizeof(double));
+    for (i = 0; i < 4; i++)
     {
-        matrix[i] = calloc(3, sizeof(double));
+        matrix[i] = calloc(4, sizeof(double));
     }
 
-    matrix[0][0] = 3L;
-    matrix[0][1] = 0L;
-    matrix[0][2] = 2L;
-    matrix[1][0] = 2L;
-    matrix[1][1] = 0L;
-    matrix[1][2] = -2L;
-    matrix[2][0] = 0L;
-    matrix[2][1] = 1L;
+    matrix[0][0] = 1L;
+    matrix[0][1] = 1L;
+    matrix[0][2] = 1L;
+    matrix[0][3] = -1L;
+    matrix[1][0] = 1L;
+    matrix[1][1] = 1L;
+    matrix[1][2] = -1L;
+    matrix[1][3] = 1L;
+    matrix[2][0] = 1L;
+    matrix[2][1] = -1L;
     matrix[2][2] = 1L;
+    matrix[2][3] = 1L;
+    matrix[3][0] = -1L;
+    matrix[3][1] = 1L;
+    matrix[3][2] = 1L;
+    matrix[3][3] = 1L;
 
 
-    double **m_inverted = get_invert(matrix, 3);
+    printf("Determinant: %lf\n", get_determinant(matrix, 4));
 
-    for (i = 0; i < 3; i++)
+    double **m_inverted = get_invert(matrix, 4);
+
+    for (i = 0; i < 4; i++)
     {
-        for (j = 0; j < 3; j++)
+        for (j = 0; j < 4; j++)
         {
             printf("%lf ", m_inverted[i][j]);
         }
         printf("\n");
     }
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < 4; i++)
         free(m_inverted[i]);
     free(m_inverted);
 
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < 4; i++)
         free(matrix[i]);
     free(matrix);
 

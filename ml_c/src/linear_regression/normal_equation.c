@@ -32,7 +32,8 @@ double get_determinant(double **matrix, unsigned int size)
 				 [C, D]]
 			Determinant = A * D - B * C
 		*/
-		determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+		determinant = matrix[0][0] * matrix[1][1]
+						- matrix[0][1] * matrix[1][0];
 	}
 	else if (size == 3)	// 3x3 matrixes
 	{
@@ -127,10 +128,10 @@ double get_determinant(double **matrix, unsigned int size)
 		double *deter_list = NULL;
 
 		m_cofactor = calloc((size_minor), sizeof(double));
-		for (i = 0; i < size; i++)
-		{
-			m_cofactor[i] = calloc(size, sizeof(double));
-		}
+
+		for (i = 0; i < size_minor; i++)
+			m_cofactor[i] = calloc(size_minor, sizeof(double));
+
 		first_col = calloc(size, sizeof(double));
 		deter_list = calloc(size, sizeof(double));
 
@@ -138,50 +139,43 @@ double get_determinant(double **matrix, unsigned int size)
 			Create cofactor matrix for first element
 			of each row.
 		*/
+		int new_i, new_j;
+		j = 0;
+
 		for (i = 0; i < size; i++)
 		{
-			// Save first element of each row
 			first_col[i] = matrix[i][0];
-			for (j = 0; j < size; j++)
+			/*
+				Create cofactor matrix for first element
+				of each row.
+			*/
+			new_i = 0;
+			for (m = 0; m < size; m++)
 			{
-				while (m < size_minor)
+				new_j = 0;
+				for (n = 0; n < size; n++)
 				{
-					while (n < size_minor)
+					if (m != i && n != j)
 					{
-						if (m != i && n != i)
-							m_cofactor[m][n] = matrix[m][n];
+						m_cofactor[new_i][new_j] = matrix[m][n];
+						new_j++;
 					}
-					if (m != i && n != i)
-						m++;
 				}
+				if (m != i && n != j)
+					new_i++;
 			}
 			deter_list[i] = get_determinant(m_cofactor, size_minor);
-		}
+		}	// end of i
 
-		/*
-			Performing the formula for calculating determinant
-			of large scale matrix.
-
-			Sample formula for 4x4 matrix:
-			|A| = Cof_A[0][0] * D[0] - Cof_A[1][0] * D[1]
-				+ Cof_A[2][0] * D[2] - Cof_A[3][0] * D[3]
-		*/
 		for (i = 0; i < size; i++)
-		{
 			if (i % 2 == 0)
-			{
 				determinant += first_col[i] * deter_list[i];
-			}
 			else
-			{
 				determinant -= first_col[i] * deter_list[i];
-			}
-		}
 
-		for (i = 0; i < size; i++)
-		{
+		for (i = 0; i < size_minor; i++)
 			free(m_cofactor[i]);
-		}
+
 		free(m_cofactor);
 		free(first_col);
 		free(deter_list);
@@ -269,8 +263,6 @@ double** get_invert(double **matrix, unsigned int size)
 			m_minors[i] = calloc(size, sizeof(double));
 		}
 
-		m = 0;
-		n = 0;
 		int new_i = 0;
 		int new_j = 0;
 
