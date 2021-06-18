@@ -173,45 +173,45 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>)
 
 ///# Calculate inverted matrix from provided matrix
 /// Currently using adjugate matrix
-///```
-///Formula:
-///  A^-1 = 1/|A| * (A~)
-///
-/// Sample 3x3 matrix:
-///	A = [[3.0, 0.0, 2.0],
-///  		 [2.0, 0.0, -2.0],
-///  		 [0.0, 1.0, 1.0]]
-///
-/// Determinant = 10
-///
-/// Matrix of Minors = [[0*1 - (-2)*1,	2*1 - (-2)*0,	2*1 - 0*0],
-/// 					 [0*1 - 2*1,	3*1 - 2*0,	3*1 - 0*0],
-/// 					 [0*(-2) - 2*0,	3*(-2) - 2*2,	3*0 - 0*2]]
-///
-/// 				= [[2, 2, 2],
-/// 				   [-2, 3, 3],
-/// 				   [0, -10, 0]]
-///
-/// Matrix of Cofactors = [[2, -2, 2],
-/// 						[2, 3, -3],
-/// 						[0, 10, 0]]
-///
-/// Transposed Matrix = [[2, 2, 0],
-/// 					  [-2, 3, 10]
-/// 					  [2, -3, 0]]
-///
-///	Inverted Matrix = 1/determinant * Transposed Matrix
-///
-/// A^-1 = [[2, 2, 0],
-/// 		 [-2, 3, 10]
-/// 		 [2, -3, 0]] / 10
-///
-/// 	  = [[0.2, 0.2, 0],
-/// 		 [-0.2, 0.3, 1],
-/// 		 [0.2, -0.3, 0]]
-///
-/// ```
-///
+/*
+	Formula:
+	A^-1 = 1/|A| * (A~)
+
+	Sample 3x3 matrix:
+		A = [[3.0, 0.0, 2.0],
+			[2.0, 0.0, -2.0],
+			[0.0, 1.0, 1.0]]
+
+	Determinant = 10
+
+	Matrix of Minors = [[0*1 - (-2)*1,	2*1 - (-2)*0,	2*1 - 0*0],
+						[0*1 - 2*1,	3*1 - 2*0,	3*1 - 0*0],
+						[0*(-2) - 2*0,	3*(-2) - 2*2,	3*0 - 0*2]]
+
+					= [[2, 2, 2],
+					[-2, 3, 3],
+					[0, -10, 0]]
+
+	Matrix of Cofactors = [[2, -2, 2],
+							[2, 3, -3],
+							[0, 10, 0]]
+
+	Transposed Matrix = [[2, 2, 0],
+						[-2, 3, 10]
+						[2, -3, 0]]
+
+		Inverted Matrix = 1/determinant * Transposed Matrix
+
+	A^-1 = [[2, 2, 0],
+			[-2, 3, 10]
+			[2, -3, 0]] / 10
+
+		= [[0.2, 0.2, 0],
+			[-0.2, 0.3, 1],
+			[0.2, -0.3, 0]]
+ */
+
+
 pub fn get_invert(matrix: &Vec<Vec<f64>>)
 							-> Result<Box<Vec<Vec<f64>>>, io::Error> {
 
@@ -311,9 +311,9 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>)
 
 ///
 /// Use normal equation to calculate theta
-///```
+///
 /// theta = (X.trans * X)^-1 * X.trans * y
-///```
+///
 /// - No need to choose alpha
 /// - Don't need to iterate
 /// - Slow if number of features is very large (10,000+)

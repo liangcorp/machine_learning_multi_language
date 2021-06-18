@@ -12,9 +12,9 @@ use std::io::{Error, ErrorKind};
 ///
 /// ## Implement the following matlab formula:
 ///
-/// ```
+///
 /// J = sum(((theta[i] * X[j]) - y).^2 ./(2 * m), "all");
-/// ```
+///
 ///
 pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>,
                         theta: &Vec<f64>) -> Result<f64, io::Error> {

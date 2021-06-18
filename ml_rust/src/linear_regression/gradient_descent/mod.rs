@@ -14,10 +14,10 @@ use std::io::{Error, ErrorKind};
 ///
 /// ## Implement the following matlab formula:
 ///
-/// ```
+///
 /// theta(indx,:) = theta(indx,:) -
 ///                 alpha * ((((temp[] * X[]) - y[]) * X(:,indx))/m);
-/// ```
+///
 ///
 
 pub fn get_thetas( x: &Vec<Vec<f64>>, y: &Vec<f64>, alpha: f64,
