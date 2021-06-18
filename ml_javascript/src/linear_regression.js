@@ -7,7 +7,7 @@
  * Date: 2021-06-15
  */
 
-const get_cost = function(X, y, theta) {
+export function get_cost(X, y, theta) {
 
 	let i, j, num_train, sum;
 
@@ -44,7 +44,7 @@ const get_cost = function(X, y, theta) {
 	return j_theta;
 }
 
-const get_theta = function(X, y, alpha, theta, num_iters) {
+export function gradient_descent(X, y, alpha, theta, num_iters) {
 
 	let sum, tmp_theta;
 
@@ -79,6 +79,13 @@ const get_theta = function(X, y, alpha, theta, num_iters) {
 
 		num_iters--;
 	}
+
+	return theta;
+}
+
+export function normal_equation(X, y) {
+
+	let theta;
 
 	return theta;
 }
