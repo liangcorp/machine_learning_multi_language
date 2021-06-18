@@ -25,9 +25,10 @@ fn main() {
     linear_regression::gradient_descent::get_thetas(&x, &y,
                                         alpha, &mut theta, 1500));
 
-    println!("Found thetas using Normal Equation: {:?}",
-                linear_regression::normal_equation::get_theta(&x, &y));
-
+    match linear_regression::normal_equation::get_theta(&x, &y) {
+        Ok(theta) => println!("Found thetas using Normal Equation: {:?}", theta),
+        Err(e) => panic!("{:?}", e),
+    }
 
 
 /*

@@ -3,8 +3,23 @@ pub mod linear_regression;
 pub mod read_data;
 
 #[cfg(test)]
-
 mod tests {
+	use super::linear_regression::normal_equation;
+
+	#[test]
+	#[should_panic]
+	fn three_by_four(){
+		let matrix = vec![
+			vec![1.0, 1.0, 1.0, -1.0],
+			vec![1.0, 1.0, -1.0, 1.0],
+			vec![1.0, -1.0, 1.0, 1.0]];
+
+		match normal_equation::get_determinant(&matrix) {
+			Ok(der) => assert_eq!(der, -16 as f64),
+			Err(e) => panic!("{}", e.get_ref().unwrap()),
+		};
+	}
+
 	#[test]
 	fn four_by_four(){
 		let matrix = vec![
@@ -13,6 +28,9 @@ mod tests {
 			vec![1.0, -1.0, 1.0, 1.0],
 			vec![-1.0, 1.0, 1.0, 1.0]];
 
-		assert_eq!(super::linear_regression::normal_equation::get_determinant(&matrix), -16 as f64);
+		match normal_equation::get_determinant(&matrix) {
+			Ok(der) => assert_eq!(der, -16 as f64),
+			Err(e) => panic!("{}", e.get_ref().unwrap()),
+		};
 	}
 }
