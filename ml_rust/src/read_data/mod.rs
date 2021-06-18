@@ -2,16 +2,20 @@
 //!
 use std::fs::File;
 use std::path::Path;
-use std::io::{self, ErrorKind, BufRead};
+use std::io::{self, ErrorKind, Error, BufRead};
 
-pub fn get_data(path: &Path) -> (Box<Vec<Vec<f64>>>, Box<Vec<f64>>) {
+pub fn get_data(path: &Path)
+            -> Result<(Box<Vec<Vec<f64>>>, Box<Vec<f64>>), io::Error> {
     let lines = match File::open(path) {
         Ok(file) => io::BufReader::new(file).lines(),
         Err(ref error) if error.kind() == ErrorKind::NotFound => {
-            panic!("File not found");
+            return Err(Error::new(ErrorKind::NotFound, "File not found"));
         },
-        Err(error) => {
-            panic!("Unable to open file {:?}", error);
+        Err(error) if error.kind() == ErrorKind::PermissionDenied => {
+            return Err(Error::new(ErrorKind::PermissionDenied, "Permission denied"));
+        }
+        Err(_) => {
+            return Err(Error::new(ErrorKind::Other, "Can not open file."));
         }
     };
 
@@ -34,7 +38,7 @@ pub fn get_data(path: &Path) -> (Box<Vec<Vec<f64>>>, Box<Vec<f64>>) {
                 }
             }
             Err(error) => {
-                println!("ERROR: {}", error);
+                return Err(error);
             }
         }
     }
@@ -61,5 +65,5 @@ pub fn get_data(path: &Path) -> (Box<Vec<Vec<f64>>>, Box<Vec<f64>>) {
         x.push(tmp_f64);
     }
 
-    (Box::new(x), Box::new(y))
+    Ok((Box::new(x), Box::new(y)))
 }

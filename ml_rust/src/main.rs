@@ -6,7 +6,10 @@ use ml_rust::{linear_regression, read_data};
 fn main() {
     let path = Path::new("../data_files/ex1data1.txt");
 
-    let (x_ptr, y_ptr) = read_data::get_data(&path);
+    let (x_ptr, y_ptr) = match read_data::get_data(&path){
+        Ok((x_ptr, y_ptr)) => (x_ptr, y_ptr),
+        Err(e) => panic!("{}", e.get_ref().unwrap()),
+    };
 
     let x = *x_ptr;
     let y = *y_ptr;
