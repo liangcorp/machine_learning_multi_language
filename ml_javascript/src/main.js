@@ -1,6 +1,6 @@
-import { get_determinant, get_invert, get_theta } from "./linear_regression/modules/normal_equation.mjs";
-import { get_cost } from "./linear_regression/modules/cost_function.mjs";
-import { get_theta } from "./linear_regression/modules/gradient_descent.mjs";
+import { get_determinant, get_invert, normal_equation } from "./modules/linear_regression/normal_equation.mjs";
+import { get_cost } from "./modules/linear_regression/cost_function.mjs";
+import { get_theta } from "./modules/linear_regression/gradient_descent.mjs";
 
 /*
 let matrix = [[3, 8],

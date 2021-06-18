@@ -287,7 +287,7 @@ const get_invert = function(matrix) {
 	- Don't need to iterate
 	- Slow if number of features is very large (10,000+)
  */
-const get_theta = function(X, y) {
+const normal_equation = function(X, y) {
 
 	let i, j, z, sum;
 	let theta = [];
@@ -365,5 +365,5 @@ const get_theta = function(X, y) {
 	return theta;
 }
 
-export {get_invert, get_determinant, get_theta};
+export {get_invert, get_determinant, normal_equation};
 
