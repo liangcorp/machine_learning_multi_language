@@ -73,4 +73,5 @@ Cargo.lock
 .idea
 .DS_Store
 /ml_rust/target/
+/restful_api/target/
 vgcore.*
