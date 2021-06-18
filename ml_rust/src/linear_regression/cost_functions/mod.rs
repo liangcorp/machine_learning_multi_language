@@ -2,6 +2,8 @@
 //!
 //! This crate is a collection of functions to perform
 //! calculation of J(theta)
+use std::io;
+use std::io::{Error, ErrorKind};
 /// # Cost function for multiple features (x\[1\], x\[2\], ..., x\[n\]
 ///
 /// - X and y are the training sets.
@@ -15,7 +17,7 @@
 /// ```
 ///
 pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>,
-                        theta: &Vec<f64>) -> f64 {
+                        theta: &Vec<f64>) -> Result<f64, io::Error> {
     let num_train;
     let num_feat = theta.len();
     let mut h_x: Vec<f64> = Vec::new();
@@ -26,7 +28,8 @@ pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>,
     if x.len() == y.len() {
         num_train = y.len();
     } else {
-        panic!("Miss matching number of elements in training sets");
+        return Err(Error::new(ErrorKind::Other,
+                                "Mis-matching training sets"));
     }
 
     for i in 0..num_train {
@@ -49,5 +52,5 @@ pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>,
                     / (2 * num_train) as f64;
     }
 
-    j_theta
+    Ok(j_theta)
 }

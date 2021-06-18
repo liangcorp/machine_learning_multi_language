@@ -15,11 +15,20 @@ fn main() {
 
     let mut theta = vec![0.0, 0.0]; // set theta 0 and theta 1 to 0.0
 
-    println!("Thetas are [0.0, 0.0], J(theta) is {}",
-    linear_regression::cost_functions::get_cost(&x, &y, &theta));
+    match linear_regression::cost_functions::get_cost(&x, &y, &theta) {
+        Ok(theta) => {
+            println!("Thetas are [0.0, 0.0], J(theta) is {:?}", theta);
+        }
+        Err(e) => panic!("{}", e.get_ref().unwrap()),
+    }
 
-    println!("Thetas are [-1.0, 2.0], J(theta) is {}",
-    linear_regression::cost_functions::get_cost(&x, &y, &vec![-1.0, 2.0]));
+    match linear_regression::cost_functions::get_cost(&x, &y,
+                                                    &vec![-1.0, 2.0]) {
+        Ok(theta) => {
+            println!("Thetas are [-1.0, 2.0], J(theta) is {:?}", theta);
+        }
+        Err(e) => panic!("{}", e.get_ref().unwrap()),
+    }
 
     match linear_regression::gradient_descent::get_thetas(&x, &y,
                                         alpha, &mut theta, 1500) {
