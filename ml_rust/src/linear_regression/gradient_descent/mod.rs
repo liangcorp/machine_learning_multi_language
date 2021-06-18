@@ -3,7 +3,8 @@
 //! This crate is a collection of functions to perform
 //! calculation of gradient descent
 
-// use super::cost_functions;
+use std::io;
+use std::io::{Error, ErrorKind};
 
 /// # Gradient descent for a single feature (x\[1\])
 ///
@@ -19,9 +20,9 @@
 /// ```
 ///
 
-pub fn get_thetas( x: &Vec<Vec<f64>>, y: &Vec<f64>,
-                        alpha: f64, theta: &mut Vec<f64>,
-                        num_iters: u32) -> Box<Vec<f64>> {
+pub fn get_thetas( x: &Vec<Vec<f64>>, y: &Vec<f64>, alpha: f64,
+                    theta: &mut Vec<f64>, num_iters: u32)
+                        -> Result<Box<Vec<f64>>, io::Error> {
 
     let num_train = y.len();
     let num_feat = theta.len();
@@ -29,6 +30,11 @@ pub fn get_thetas( x: &Vec<Vec<f64>>, y: &Vec<f64>,
     let mut sum: f64;
     let mut tmp_theta: Vec<f64>;
     let mut h_x: Vec<f64> = Vec::new();
+
+    if x.len() != y.len() {
+        return Err(Error::new(ErrorKind::Other,
+            "Mis-matching training sets"));
+    }
 
     for _ in 0..num_iters {
         h_x.clear();
@@ -57,5 +63,5 @@ pub fn get_thetas( x: &Vec<Vec<f64>>, y: &Vec<f64>,
         }
     }
 
-    Box::new(theta.to_vec())
+    Ok(Box::new(theta.to_vec()))
 }
