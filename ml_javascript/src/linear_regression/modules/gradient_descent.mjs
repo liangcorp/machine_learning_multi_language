@@ -1,5 +1,5 @@
 /**
- * Name: ml_modules.js
+ * Name: gradient_descent.mjs
  * Author: Chen Liang
  * Description: My implementation of Machine Learning formulas
  * 				in JavaScript. This is an exercise, so you may
@@ -7,44 +7,8 @@
  * Date: 2021-06-15
  */
 
-export function get_cost(X, y, theta) {
-
-	let i, j, num_train, sum;
-
-	let num_feat = theta.length;
-	let h_x = [];
-
-	let j_theta = 0.0;
-
-	if (X.length === y.length) {
-		num_train = X.length;
-	}
-	else {
-		return -1;
-	}
-
-	for (let x of X) {
-		if (x.length !== theta.length) {
-			return -2;
-		}
-	}
-
-	for (i = 0; i < num_train; i++) {
-		sum = 0.0;
-		for (j = 0; j < num_feat; j++) {
-			sum += X[i][j] * theta[j];
-		}
-		h_x.push(sum);
-	}
-
-	for (j = 0; j < num_train; j++){
-		j_theta += (h_x[j] - y[j]) ** 2 / (2 * num_train);
-	}
-
-	return j_theta;
-}
-
-export function gradient_descent(X, y, alpha, theta, num_iters) {
+ export const get_theta = function(X, y, alpha,
+										theta, num_iters) {
 
 	let sum, tmp_theta;
 
@@ -79,13 +43,6 @@ export function gradient_descent(X, y, alpha, theta, num_iters) {
 
 		num_iters--;
 	}
-
-	return theta;
-}
-
-export function normal_equation(X, y) {
-
-	let theta;
 
 	return theta;
 }
