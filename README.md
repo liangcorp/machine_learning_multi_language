@@ -6,5 +6,6 @@ Linear regression has been completed
 
 @TODO Logistic regression
 @TODO Neural network
+@TODO RESTful API for accepting remote requests
 
 Maybe I will port it into javascript as well (after I learned javascript).
