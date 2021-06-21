@@ -60,7 +60,7 @@ pub fn mean_normal_single(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
 ///
 #[allow(dead_code)]
 pub fn mean_normal_multiple(v: &Vec<Vec<f32>>)
-            -> (Box<Vec<Vec<f32>>>, Box<Vec<f32>>, Box<Vec<f32>>) {
+                                -> (Box<Vec<Vec<f32>>>, Box<Vec<f32>>, Box<Vec<f32>>) {
     let mut max: Vec<f32> = Vec::new();
     let mut min: Vec<f32> = Vec::new();
     let mut mean: Vec<f32> = Vec::new();

@@ -16,8 +16,7 @@ use std::io::{Error, ErrorKind};
 /// J = sum(((theta[i] * X[j]) - y).^2 ./(2 * m), "all");
 ///
 ///
-pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>,
-                        theta: &Vec<f64>) -> Result<f64, io::Error> {
+pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>, theta: &Vec<f64>) -> Result<f64, io::Error> {
     let num_train;
     let num_feat = theta.len();
     let mut h_x: Vec<f64> = Vec::new();
@@ -28,14 +27,12 @@ pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>,
     if x.len() == y.len() {
         num_train = y.len();
     } else {
-        return Err(Error::new(ErrorKind::Other,
-                                "Mis-matching training sets"));
+        return Err(Error::new(ErrorKind::Other, "Mis-matching training sets"));
     }
 
     for i in 0..num_train {
         if x[i].len() != theta.len() {
-            panic!("Missing matching number of elements
-                    in theta and X[{}]", i);
+            panic!("Missing matching number of elements in theta and X[{}]", i);
         }
     }
 
@@ -48,8 +45,7 @@ pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>,
     }
 
     for j in 0..num_train {
-        j_theta += (h_x[j] - y[j]) * (h_x[j] - y[j])
-                    / (2 * num_train) as f64;
+        j_theta += (h_x[j] - y[j]) * (h_x[j] - y[j]) / (2 * num_train) as f64;
     }
 
     Ok(j_theta)

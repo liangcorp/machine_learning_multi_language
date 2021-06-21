@@ -4,8 +4,7 @@ use std::fs::File;
 use std::path::Path;
 use std::io::{self, ErrorKind, Error, BufRead};
 
-pub fn get_data(path: &Path)
-            -> Result<(Box<Vec<Vec<f64>>>, Box<Vec<f64>>), io::Error> {
+pub fn get_data(path: &Path) -> Result<(Box<Vec<Vec<f64>>>, Box<Vec<f64>>), io::Error> {
     let lines = match File::open(path) {
         Ok(file) => io::BufReader::new(file).lines(),
         Err(ref error) if error.kind() == ErrorKind::NotFound => {
@@ -19,7 +18,6 @@ pub fn get_data(path: &Path)
         }
     };
 
-
     let mut y: Vec<f64> = Vec::new();
     let mut v: Vec<String> = Vec::new();
 
@@ -31,8 +29,7 @@ pub fn get_data(path: &Path)
                 match line.rsplit_once(',') {
                     Some(data_tuple) => {
                         v.push(data_tuple.0.to_string());
-                        y.push(data_tuple.1.parse::<f64>()
-                                            .expect("Failed"));
+                        y.push(data_tuple.1.parse::<f64>().expect("Failed"));
                     },
                     None => (),
                 }

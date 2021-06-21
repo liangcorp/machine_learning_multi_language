@@ -9,16 +9,14 @@ use std::io::{Error, ErrorKind};
 /// Tested for 2x2, 3x3 and 4x4 matrixes.
 /// Implementation is not optimized for super large matrixes.
 ///
-pub fn get_determinant(matrix:&Vec<Vec<f64>>)
-									-> Result<f64, io::Error> {
+pub fn get_determinant(matrix:&Vec<Vec<f64>>) -> Result<f64, io::Error> {
 	let mut z: i32;
 	let mut determinant: f64 = 0.0;
 	let mut multiply: f64;
 	let num_feat = matrix.len();
 
 	if matrix.len() != matrix[0].len() {
-		return Err(Error::new(ErrorKind::Other,
-								"Matrix not symmetrical"));
+		return Err(Error::new(ErrorKind::Other, "Matrix not symmetrical"));
 	}
 
 	if matrix.len() == 2 {	// 2x2 matrixes
@@ -29,8 +27,7 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>)
 			Determinant = A * D - B * C
 		*/
 
-		determinant = matrix[0][0] * matrix[1][1]
-					- matrix[0][1] * matrix[1][0];
+		determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
 	} else if matrix.len() == 3 {	// 3x3 matrixes
 		/*
 			Calculate the Determinant (der) of larger scale matrix
@@ -212,8 +209,7 @@ pub fn get_determinant(matrix:&Vec<Vec<f64>>)
  */
 
 
-pub fn get_invert(matrix: &Vec<Vec<f64>>)
-							-> Result<Box<Vec<Vec<f64>>>, io::Error> {
+pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Result<Box<Vec<Vec<f64>>>, io::Error> {
 
 	let mut mtrx_result: Vec<Vec<f64>>;
 	let determinant: f64 = match get_determinant(&matrix) {
@@ -242,8 +238,7 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>)
 		let col = matrix[0].len();
 
 		if row != col {
-			return Err(Error::new(ErrorKind::Other,
-								"Matrix not symmetrical"));
+			return Err(Error::new(ErrorKind::Other, "Matrix not symmetrical"));
 		}
 
 		// Calculate matrix of minors
@@ -318,8 +313,7 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>)
 /// - Don't need to iterate
 /// - Slow if number of features is very large (10,000+)
 ///
-pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>)
-								-> Result<Box<Vec<f64>>, io::Error> {
+pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Result<Box<Vec<f64>>, io::Error> {
 
 	let mut theta: Vec<f64> = Vec::new();
 	let mut mltply_rslt: Vec<Vec<f64>> = Vec::new();
@@ -333,8 +327,7 @@ pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>)
 	if x.len() == y.len() {
 		num_train = x.len();
 	} else {
-		return Err(Error::new(ErrorKind::Other,
-							"Matrix not symmetrical"));
+		return Err(Error::new(ErrorKind::Other, "Matrix not symmetrical"));
 	}
 
 	num_feat = x[0].len();

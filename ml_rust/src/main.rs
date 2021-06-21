@@ -25,31 +25,23 @@ fn main() {
         Err(e) => panic!("{}", e.get_ref().unwrap()),
     }
 
-    match linear_regression::cost_functions::get_cost(&x,
-                                                      &y,
-                                                      &vec![-1.0, 2.0]) {
+    match linear_regression::cost_functions::get_cost(&x, &y, &vec![-1.0, 2.0]) {
         Ok(theta) => {
             println!("Thetas are [-1.0, 2.0], J(theta) is {:?}", theta);
         }
         Err(e) => panic!("{}", e.get_ref().unwrap()),
     }
 
-    match linear_regression::gradient_descent::get_thetas(&x,
-                                                          &y,
-                                                          alpha,
-                                                          &mut theta,
-                                                          1500) {
+    match linear_regression::gradient_descent::get_thetas(&x, &y, alpha, &mut theta, 1500) {
         Ok(theta) => {
-            println!("Found thetas using Gradient Descent: {:?}",
-                                                                theta)
+            println!("Found thetas using Gradient Descent: {:?}", theta)
         },
         Err(e) => panic!("{}", e.get_ref().unwrap()),
     }
 
     match linear_regression::normal_equation::get_theta(&x, &y) {
         Ok(theta) => {
-            println!("Found thetas using Normal Equation: {:?}",
-                                                                theta)
+            println!("Found thetas using Normal Equation: {:?}", theta)
         },
         Err(e) => panic!("{}", e.get_ref().unwrap()),
     }
