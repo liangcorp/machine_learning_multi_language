@@ -21,7 +21,8 @@ use std::io::{Error, ErrorKind};
 ///
 
 pub fn get_thetas( x: &Vec<Vec<f64>>, y: &Vec<f64>, alpha: f64,
-                    theta: &mut Vec<f64>, num_iters: u32) -> Result<Box<Vec<f64>>, io::Error> {
+                    theta: &mut Vec<f64>, num_iters: u32)
+                                            -> Result<Box<Vec<f64>>, io::Error> {
 
     let num_train = y.len();
     let num_feat = theta.len();

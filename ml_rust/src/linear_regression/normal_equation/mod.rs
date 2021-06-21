@@ -313,7 +313,8 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Result<Box<Vec<Vec<f64>>>, io::Erro
 /// - Don't need to iterate
 /// - Slow if number of features is very large (10,000+)
 ///
-pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Result<Box<Vec<f64>>, io::Error> {
+pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>)
+									-> Result<Box<Vec<f64>>, io::Error> {
 
 	let mut theta: Vec<f64> = Vec::new();
 	let mut mltply_rslt: Vec<Vec<f64>> = Vec::new();

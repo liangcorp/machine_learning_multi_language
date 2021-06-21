@@ -32,7 +32,8 @@ fn main() {
         Err(e) => panic!("{}", e.get_ref().unwrap()),
     }
 
-    match linear_regression::gradient_descent::get_thetas(&x, &y, alpha, &mut theta, 1500) {
+    match linear_regression::gradient_descent::get_thetas(&x, &y, alpha,
+                                                             &mut theta, 1500) {
         Ok(theta) => {
             println!("Found thetas using Gradient Descent: {:?}", theta)
         },

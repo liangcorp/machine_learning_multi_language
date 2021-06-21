@@ -4,7 +4,8 @@ use std::fs::File;
 use std::path::Path;
 use std::io::{self, ErrorKind, Error, BufRead};
 
-pub fn get_data(path: &Path) -> Result<(Box<Vec<Vec<f64>>>, Box<Vec<f64>>), io::Error> {
+pub fn get_data(path: &Path)
+                        -> Result<(Box<Vec<Vec<f64>>>, Box<Vec<f64>>), io::Error> {
     let lines = match File::open(path) {
         Ok(file) => io::BufReader::new(file).lines(),
         Err(ref error) if error.kind() == ErrorKind::NotFound => {
