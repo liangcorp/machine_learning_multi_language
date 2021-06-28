@@ -75,3 +75,4 @@ Cargo.lock
 /ml_rust/target/
 /restful_api/target/
 vgcore.*
+*.swp
