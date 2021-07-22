@@ -1,5 +1,6 @@
 pub mod feature_scaling;
 pub mod linear_regression;
+pub mod logistic_regression;
 pub mod read_data;
 
 #[cfg(test)]
