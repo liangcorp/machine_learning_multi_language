@@ -22,7 +22,9 @@ typedef struct
     int num_feat;
 } data_t;
 
-data_t* get_data(char *file_name)
+// Function name is the same of the source code file name.
+// This is for convenient purpose.
+data_t* read_data(char *file_name)
 {
     data_t* data_set = NULL;
 
@@ -81,7 +83,7 @@ data_t* get_data(char *file_name)
 
     for (i = 0; i < m; i++)
     {
-        X[i][0] = 1.0L; // Initialised the first features into 1
+        X[i][0] = 1.0L; // Initialized the first features into 1
     }
 
     y = calloc(m, sizeof(double));
@@ -93,12 +95,12 @@ data_t* get_data(char *file_name)
 
         for (j = 1; j < n; j++)
         {
-            // Read all but the last colum into X
+            // Read all but the last column into X
             // Convert the string to double
             X[i][j] = strtod(strtok(str, ","), NULL);
         }
 
-        // Read the last colum into y
+        // Read the last column into y
         // Convert the string to double
         y[i] = strtod(strtok(NULL, ","), NULL);
 

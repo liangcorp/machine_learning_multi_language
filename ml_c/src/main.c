@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
     #endif
     #ifdef TIMER
 
-        clock_t cpu_end = clock();          /* Final cpu time */
+        clock_t cpu_end = clock();          /* Final CPU time */
 
         printf("main completed in %lf seconds\n",
                     ((double)(cpu_end - cpu_start)) / CLOCKS_PER_SEC);
