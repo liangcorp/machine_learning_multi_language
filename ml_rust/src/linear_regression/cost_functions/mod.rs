@@ -16,13 +16,12 @@ use std::io::{Error, ErrorKind};
 /// J = sum(((theta[i] * X[j]) - y).^2 ./(2 * m), "all");
 ///
 ///
-pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>, theta: &Vec<f64>)
-                                                    -> Result<f64, io::Error> {
+pub fn get_cost(x: &Vec<Vec<f64>>, y: &Vec<f64>, theta: &Vec<f64>) -> Result<f64, io::Error> {
     let num_train;
     let num_feat = theta.len();
     let mut h_x: Vec<f64> = Vec::new();
 
-    let mut j_theta: f64 = 0.0;     /* The cost */
+    let mut j_theta: f64 = 0.0; /* The cost */
     let mut sum: f64;
 
     if x.len() == y.len() {
