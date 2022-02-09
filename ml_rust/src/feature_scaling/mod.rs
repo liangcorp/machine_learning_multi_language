@@ -1,10 +1,10 @@
-//! # Implementation of feature normalization
+//! # Implementation of feature normalisation
 ///
 /// Use mean normalization on 1D array.
 /// This is used on Y that is a 1D array.
 ///
 #[allow(dead_code)]
-pub fn mean_normal_single(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
+pub fn mean_normal_single(v: &[f32]) -> (Box<Vec<f32>>, f32, f32) {
     let mut max: f32;
     let mut min: f32;
     let mut result: Vec<f32> = Vec::new();
@@ -56,15 +56,15 @@ pub fn mean_normal_single(v: &Vec<f32>) -> (Box<Vec<f32>>, f32, f32) {
 /// NOTE: The values of first feature (i.e. x\[0\] is 1.0)
 ///
 #[allow(dead_code)]
-pub fn mean_normal_multiple(
-    v: &Vec<Vec<f32>>,
-) -> (Box<Vec<Vec<f32>>>, Box<Vec<f32>>, Box<Vec<f32>>) {
+type DoubleVecF32 = Vec<Vec<f32>>;
+
+pub fn mean_normal_multiple(v: &[Vec<f32>]) -> (Box<DoubleVecF32>, Box<Vec<f32>>, Box<Vec<f32>>) {
     let mut max: Vec<f32> = Vec::new();
     let mut min: Vec<f32> = Vec::new();
     let mut mean: Vec<f32> = Vec::new();
     let mut std_dev: Vec<f32> = Vec::new();
 
-    let mut result: Vec<Vec<f32>> = v.clone();
+    let mut result: DoubleVecF32 = v.to_vec();
 
     let row = v.len();
     let col = v[0].len();
@@ -80,29 +80,29 @@ pub fn mean_normal_multiple(
 
     for j in 1..col {
         sum = 0.0;
-        for i in 0..row {
-            if max[j] < v[i][j] {
-                max[j] = v[i][j];
-            } else if min[j] > v[i][j] {
-                min[j] = v[i][j];
+        for i in v.iter().enumerate().take(row) {
+            if max[j] < v[i.0][j] {
+                max[j] = v[i.0][j];
+            } else if min[j] > v[i.0][j] {
+                min[j] = v[i.0][j];
             } else {
                 // Do nothing
             }
-            sum += v[i][j];
+            sum += v[i.0][j];
         }
         mean.push(sum);
     }
 
-    for j in 1..col {
-        mean[j] = mean[j] / row as f32;
+    for j in mean.iter_mut().take(col).skip(1) {
+        *j /= row as f32;
     }
 
     std_dev.push(1.0);
 
     for j in 1..col {
         sum = 0.0;
-        for i in 0..row {
-            sum += (v[i][j] - mean[j]) * (v[i][j] - mean[j]);
+        for i in v.iter().take(row) {
+            sum += (i[j] - mean[j]) * (i[j] - mean[j]);
         }
 
         std_dev.push((sum / v.len() as f32).sqrt());

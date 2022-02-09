@@ -20,8 +20,8 @@ use std::io::{Error, ErrorKind};
 ///
 ///
 pub fn get_thetas(
-    x: &Vec<Vec<f64>>,
-    y: &Vec<f64>,
+    x: &[Vec<f64>],
+    y: &[f64],
     alpha: f64,
     theta: &mut Vec<f64>,
     num_iters: u32,
@@ -42,11 +42,11 @@ pub fn get_thetas(
 
         tmp_theta = theta.clone();
 
-        for i in 0..num_train {
+        for i in x.iter().take(num_train) {
             sum = 0.0;
 
             for j in 0..num_feat {
-                sum += tmp_theta[j] * x[i][j];
+                sum += tmp_theta[j] * i[j];
             }
 
             h_x.push(sum);

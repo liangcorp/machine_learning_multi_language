@@ -4,7 +4,9 @@ use std::fs::File;
 use std::io::{self, BufRead, Error, ErrorKind};
 use std::path::Path;
 
-pub fn get_data(path: &Path) -> Result<(Box<Vec<Vec<f64>>>, Box<Vec<f64>>), io::Error> {
+type DoubleVecF64 = Vec<Vec<f64>>;
+
+pub fn get_data(path: &Path) -> Result<(Box<DoubleVecF64>, Box<Vec<f64>>), io::Error> {
     let lines = match File::open(path) {
         Ok(file) => io::BufReader::new(file).lines(),
         Err(ref error) if error.kind() == ErrorKind::NotFound => {
@@ -24,17 +26,9 @@ pub fn get_data(path: &Path) -> Result<(Box<Vec<Vec<f64>>>, Box<Vec<f64>>), io::
     // Read the file line by line
     // split each line by the last ',' into two vectors of v and y
     for line in lines {
-        match line {
-            Ok(line) => match line.rsplit_once(',') {
-                Some(data_tuple) => {
-                    v.push(data_tuple.0.to_string());
-                    y.push(data_tuple.1.parse::<f64>().expect("Failed"));
-                }
-                None => (),
-            },
-            Err(error) => {
-                return Err(error);
-            }
+        if let Some(data_tuple) = line.unwrap().rsplit_once(',') {
+            v.push(data_tuple.0.to_string());
+            y.push(data_tuple.1.parse::<f64>().expect("Failed"));
         }
     }
 
@@ -47,13 +41,16 @@ pub fn get_data(path: &Path) -> Result<(Box<Vec<Vec<f64>>>, Box<Vec<f64>>), io::
     let mut x: Vec<Vec<f64>> = Vec::new();
 
     for i in tmp.iter() {
-        let mut tmp_f64: Vec<f64> = Vec::new();
-        tmp_f64.push(1.0);
-        for j in i.into_iter().map(|e| e.to_string().parse::<f64>()) {
-            match j {
-                Ok(f) => tmp_f64.push(f),
-                Err(_) => (),
+        let mut tmp_f64: Vec<f64> = vec![1.0];
+
+        for j in i.iter().map(|e| e.to_string().parse::<f64>()) {
+            if let Ok(..) = j {
+                tmp_f64.push(j.unwrap());
             }
+            // match j {
+            //     Ok(f) => tmp_f64.push(f),
+            //     Err(_) => (),
+            // }
         }
         x.push(tmp_f64);
     }

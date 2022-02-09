@@ -6,7 +6,7 @@ use ml_rust::{linear_regression, read_data};
 fn main() {
     let path = Path::new("../data_files/ex1data1.txt");
 
-    let (x_ptr, y_ptr) = match read_data::get_data(&path) {
+    let (x_ptr, y_ptr) = match read_data::get_data(path) {
         Ok((x_ptr, y_ptr)) => (x_ptr, y_ptr),
         Err(e) => panic!("{}", e.get_ref().unwrap()),
     };
@@ -25,7 +25,7 @@ fn main() {
         Err(e) => panic!("{}", e.get_ref().unwrap()),
     }
 
-    match linear_regression::cost_functions::get_cost(&x, &y, &vec![-1.0, 2.0]) {
+    match linear_regression::cost_functions::get_cost(&x, &y, &[-1.0, 2.0]) {
         Ok(theta) => {
             println!("Thetas are [-1.0, 2.0], J(theta) is {:?}", theta);
         }

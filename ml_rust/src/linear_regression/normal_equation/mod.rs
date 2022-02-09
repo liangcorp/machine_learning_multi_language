@@ -9,7 +9,7 @@ use std::io::{Error, ErrorKind};
 /// Tested for 2x2, 3x3 and 4x4 matrixes.
 /// Implementation is not optimized for super large matrixes.
 ///
-pub fn get_determinant(matrix: &Vec<Vec<f64>>) -> Result<f64, io::Error> {
+pub fn get_determinant(matrix: &[Vec<f64>]) -> Result<f64, io::Error> {
     let mut z: i32;
     let mut determinant: f64 = 0.0;
     let mut multiply: f64;
@@ -45,12 +45,12 @@ pub fn get_determinant(matrix: &Vec<Vec<f64>>) -> Result<f64, io::Error> {
         for i in 0..num_feat {
             z = i as i32; // starting column (increase each loop)
             multiply = 1.0;
-            for j in 0..num_feat {
+            for j in matrix.iter().take(num_feat) {
                 if z >= num_feat as i32 {
                     z = 0; // Reset to column 0
                 }
 
-                multiply *= matrix[j][z as usize];
+                multiply *= j[z as usize];
                 z += 1; // Move to next column
             }
             // A * E * I + B * F * G + C * D * H
@@ -61,19 +61,19 @@ pub fn get_determinant(matrix: &Vec<Vec<f64>>) -> Result<f64, io::Error> {
             z = (num_feat - 1 - i) as i32;
             multiply = 1.0;
             // starting column (decrease each loop)
-            for j in 0..num_feat {
+            for j in matrix.iter().take(num_feat) {
                 if z < 0 {
                     z = (num_feat - 1) as i32; // Reset to column 0
                 }
 
-                multiply *= matrix[j][z as usize];
+                multiply *= j[z as usize];
                 z -= 1; // Move to last column
             }
             // C * E * G - A * F * H - B * D * I
             determinant -= multiply;
         }
     } else {
-        // 4x4 and above matrixes
+        // 4x4 and above matrix
         /*
             Use self calling function to further reduce the
             length of matrix.
@@ -125,13 +125,13 @@ pub fn get_determinant(matrix: &Vec<Vec<f64>>) -> Result<f64, io::Error> {
                 Create cofactor matrix for first element
                 of each row.
             */
-            for m in 0..num_feat {
+            for m in matrix.iter().enumerate().take(num_feat) {
                 for n in 0..num_feat {
-                    if m != i && n != j {
-                        cofactor_row.push(matrix[m][n]);
+                    if m.0 != i && n != j {
+                        cofactor_row.push(m.1[n]);
                     }
                 }
-                if cofactor_row.len() != 0 {
+                if !cofactor_row.is_empty() {
                     cofactor.push(cofactor_row.clone());
                     cofactor_row.clear();
                 }
@@ -207,15 +207,15 @@ pub fn get_determinant(matrix: &Vec<Vec<f64>>) -> Result<f64, io::Error> {
            [0.2, -0.3, 0]]
 */
 
-pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Result<Box<Vec<Vec<f64>>>, io::Error> {
+pub fn get_invert(matrix: &[Vec<f64>]) -> Result<Box<Vec<Vec<f64>>>, io::Error> {
     let mut mtrx_result: Vec<Vec<f64>>;
-    let determinant: f64 = match get_determinant(&matrix) {
+    let determinant: f64 = match get_determinant(matrix) {
         Ok(determinant) => determinant,
         Err(e) => return Err(e),
     };
 
     if matrix.len() == 2 {
-        mtrx_result = matrix.clone();
+        mtrx_result = matrix.to_vec();
 
         mtrx_result[0][0] = matrix[1][1] / determinant;
         mtrx_result[1][1] = matrix[0][0] / determinant;
@@ -240,13 +240,13 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Result<Box<Vec<Vec<f64>>>, io::Erro
         // Calculate matrix of minors
         for i in 0..row {
             for j in 0..col {
-                for m in 0..row {
+                for m in matrix.iter().enumerate().take(row) {
                     for n in 0..col {
-                        if m != i && n != j {
-                            mtrx_der_row.push(matrix[m][n]);
+                        if m.0 != i && n != j {
+                            mtrx_der_row.push(m.1[n]);
                         }
                     }
-                    if mtrx_der_row.len() != 0 {
+                    if !mtrx_der_row.is_empty() {
                         mtrx_der.push(mtrx_der_row.clone());
                     }
                     mtrx_der_row.clear();
@@ -264,13 +264,11 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Result<Box<Vec<Vec<f64>>>, io::Erro
         }
         // println!("Matrix minor: {:?}", mtrx_minors);
 
-        // Matrix of Cofactors
-        for i in 0..row {
+        // Matrix of Co-factors
+        for i in mtrx_minors.iter_mut().enumerate().take(row) {
             for j in 0..col {
-                if i % 2 == 0 && j % 2 != 0 {
-                    mtrx_minors[i][j] *= -1.0;
-                } else if i % 2 != 0 && j % 2 == 0 {
-                    mtrx_minors[i][j] *= -1.0;
+                if (i.0 % 2 == 0 && j % 2 != 0) || (i.0 % 2 != 0 && j % 2 == 0) {
+                    i.1[j] *= -1.0;
                 }
             }
         }
@@ -279,9 +277,9 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Result<Box<Vec<Vec<f64>>>, io::Erro
         // Transpose matrix
         mtrx_trans = mtrx_minors.clone();
 
-        for i in 0..row {
-            for j in 0..col {
-                mtrx_trans[j][i] = mtrx_minors[i][j];
+        for i in mtrx_minors.iter().enumerate().take(row) {
+            for j in mtrx_trans.iter_mut().enumerate().take(col) {
+                j.1[i.0] = i.1[j.0];
             }
         }
         // println!("Matrix transposed: {:?}", mtrx_trans);
@@ -308,7 +306,7 @@ pub fn get_invert(matrix: &Vec<Vec<f64>>) -> Result<Box<Vec<Vec<f64>>>, io::Erro
 /// - Don't need to iterate
 /// - Slow if number of features is very large (10,000+)
 ///
-pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Result<Box<Vec<f64>>, io::Error> {
+pub fn get_theta(x: &[Vec<f64>], y: &[f64]) -> Result<Box<Vec<f64>>, io::Error> {
     let mut theta: Vec<f64> = Vec::new();
     let mut mltply_rslt: Vec<Vec<f64>> = Vec::new();
     let mut mltply_rslt_row: Vec<f64> = Vec::new();
@@ -342,9 +340,9 @@ pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Result<Box<Vec<f64>>, io::E
         for j in 0..num_feat {
             // loop for the rows of X
             sum = 0.0;
-            for z in 0..num_train {
+            for z in x.iter().take(num_train) {
                 // loop for the rows
-                sum += x[z][i] * x[z][j];
+                sum += z[i] * z[j];
             }
             mltply_rslt_row.push(sum as f64); // results for each row
         }
@@ -386,8 +384,8 @@ pub fn get_theta(x: &Vec<Vec<f64>>, y: &Vec<f64>) -> Result<Box<Vec<f64>>, io::E
 
     for i in 0..num_feat {
         sum = 0.0;
-        for j in 0..num_feat {
-            sum += invrt_mtrx[i][j] * y_x_trans[j];
+        for j in y_x_trans.iter().enumerate().take(num_feat) {
+            sum += invrt_mtrx[i][j.0] * j.1;
         }
         theta.push(sum);
     }
