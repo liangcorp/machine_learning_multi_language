@@ -44,9 +44,8 @@ pub fn get_data(path: &Path) -> Result<(Box<DoubleVecF64>, Box<Vec<f64>>), io::E
         let mut tmp_f64: Vec<f64> = vec![1.0];
 
         for j in i.iter().map(|e| e.to_string().parse::<f64>()) {
-            if let Ok(..) = j {
-                tmp_f64.push(j.unwrap());
-            }
+            tmp_f64.push(j.unwrap());
+
             // match j {
             //     Ok(f) => tmp_f64.push(f),
             //     Err(_) => (),
