@@ -17,7 +17,7 @@ mod tests {
         ];
 
         match normal_equation::get_determinant(&matrix) {
-            Ok(der) => assert_eq!(der, -16 as f64),
+            Ok(der) => assert_eq!(der, -16_f64),
             Err(e) => panic!("{}", e.get_ref().unwrap()),
         };
     }
@@ -32,7 +32,7 @@ mod tests {
         ];
 
         match normal_equation::get_determinant(&matrix) {
-            Ok(der) => assert_eq!(der, -16 as f64),
+            Ok(der) => assert_eq!(der, -16_f64),
             Err(e) => panic!("{}", e.get_ref().unwrap()),
         };
     }
