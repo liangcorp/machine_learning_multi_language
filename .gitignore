@@ -76,3 +76,4 @@ Cargo.lock
 /restful_api/target/
 vgcore.*
 *.swp
+\**

@@ -35,7 +35,7 @@ typedef struct {
 	double std_dev;
 } normal_single_t;
 
-data_t *read_data(char *file_name);
+data_t *read_from_data_file(char *file_name);
 
 double cost_function(double **X, double *y, double *theta, int no_train,
 		     int no_feat);

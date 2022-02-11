@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	double *y = NULL; // results
 
 	// Get data set from data file
-	data_set = read_data(argv[1]);
+	data_set = read_from_data_file(argv[1]);
 
 	X = data_set->X;
 	y = data_set->y;

@@ -1,5 +1,5 @@
 /**
- * @file read_data.c
+ * @file read_from_data_file.c
  * @author Chen Liang
  * @brief Read data from file and store it in array
  * @version 0.1
@@ -23,7 +23,7 @@ typedef struct {
 
 // Function name is the same of the source code file name.
 // This is for convenient purpose.
-data_t *read_data(char *file_name)
+data_t *read_from_data_file(char *file_name)
 {
 	data_t *data_set = NULL;
 
