@@ -30,7 +30,7 @@ const get_determinant = function(matrix) {
 		/*
 			Calculate the Determinant (der) of 2D matrix
 			M = [[A, B],
-				 [C, D]]
+			[C, D]]
 			Determinant = A * D - B * C
 		*/
 		determinant = matrix[0][0] * matrix[1][1]
@@ -41,8 +41,8 @@ const get_determinant = function(matrix) {
 			Calculate the Determinant (der) of larger scale matrix
 			(shortcut method)
 			M = [[A, B, C]
-				[D, E, F]
-				[G, H, I]]
+			[D, E, F]
+			[G, H, I]]
 
 			der = A * E * I + B * F * G + C * D * H
 					- C * E * G - A * F * H - B * D * I;
@@ -92,27 +92,27 @@ const get_determinant = function(matrix) {
 			determinant of 4x4.
 
 			A = [[0.0, 0.1, 0.2, 0.3],
-				 [1.0, 1.1, 1.2, 1.3],
-				 [2.0, 2.1, 2.2, 2.3],
-				 [3.0, 3.1, 3.2, 3.3]]
+			[1.0, 1.1, 1.2, 1.3],
+			[2.0, 2.1, 2.2, 2.3],
+			[3.0, 3.1, 3.2, 3.3]]
 
 			Calculate the determinant of following 3x3 matrixes (D[3])
 
 			Cof_A[0][0] = [[1.1, 1.2, 1.3],
-							 [2.1, 2.2, 2.3],
-							 [3.1, 3.2, 3.3]]
+			[2.1, 2.2, 2.3],
+			[3.1, 3.2, 3.3]]
 
 			Cof_A[1][0] = [[0.1, 0.2, 0.3],
-						   [2.1, 2.2, 2.3],
-						   [3.1, 3.2, 3.3]]
+			[2.1, 2.2, 2.3],
+			[3.1, 3.2, 3.3]]
 
 			Cof_A[2][0] = [[0.1, 0.2, 0.3],
-						   [1.1, 1.2, 1.3],
-						   [3.1, 3.2, 3.3]]
+			[1.1, 1.2, 1.3],
+			[3.1, 3.2, 3.3]]
 
 			Cof_A[3][0] = [[0.1, 0.2, 0.3],
-						   [1.1, 1.2, 1.3],
-						   [2.1, 2.2, 2.3]]
+			[1.1, 1.2, 1.3],
+			[2.1, 2.2, 2.3]]
 
 			Formula for calculating determinant of 4x4 matrix:
 			|A| = Cof_A[0][0] * D[0] - Cof_A[1][0] * D[1]
@@ -161,7 +161,7 @@ const get_determinant = function(matrix) {
 	}	// end of else
 
 	return determinant;
-}
+};
 
 /*
 	Calculate inverted matrix from provided matrix
@@ -172,36 +172,36 @@ const get_determinant = function(matrix) {
 
 		Sample 3x3 matrix:
 			A = [[3.0, 0.0, 2.0],
-				[2.0, 0.0, -2.0],
-				[0.0, 1.0, 1.0]]
+			[2.0, 0.0, -2.0],
+			[0.0, 1.0, 1.0]]
 
 		Determinant = 10
 
 		Matrix of Minors = [[0*1 - (-2)*1,	2*1 - (-2)*0,	2*1 - 0*0],
-							[0*1 - 2*1,	3*1 - 2*0,	3*1 - 0*0],
-							[0*(-2) - 2*0,	3*(-2) - 2*2,	3*0 - 0*2]]
+		[0*1 - 2*1,	3*1 - 2*0,	3*1 - 0*0],
+		[0*(-2) - 2*0,	3*(-2) - 2*2,	3*0 - 0*2]]
 
-						= [[2, 2, 2],
-						[-2, 3, 3],
-						[0, -10, 0]]
+		= [[2, 2, 2],
+		[-2, 3, 3],
+		[0, -10, 0]]
 
 		Matrix of Cofactors = [[2, -2, 2],
-								[2, 3, -3],
-								[0, 10, 0]]
+		[2, 3, -3],
+		[0, 10, 0]]
 
 		Transposed Matrix = [[2, 2, 0],
-							[-2, 3, 10]
-							[2, -3, 0]]
+		[-2, 3, 10]
+		[2, -3, 0]]
 
 		Inverted Matrix = 1/determinant * Transposed Matrix
 
 		A^-1 = [[2, 2, 0],
-				[-2, 3, 10]
-				[2, -3, 0]] / 10
+		[-2, 3, 10]
+		[2, -3, 0]] / 10
 
 			= [[0.2, 0.2, 0],
-				[-0.2, 0.3, 1],
-				[0.2, -0.3, 0]]
+			[-0.2, 0.3, 1],
+			[0.2, -0.3, 0]]
  */
 const get_invert = function(matrix) {
 	let i, j, m, n;
@@ -276,7 +276,7 @@ const get_invert = function(matrix) {
 	}
 
 	return m_result;
-}
+};
 
 /*
 	Use normal equation to calculate theta
@@ -297,7 +297,7 @@ const normal_equation = function(X, y) {
 	let y_x_trans = [];
 
 	let num_feat = X[0].length;
-	let num_train = y.length
+	let num_train = y.length;
 
 	if (X.length != y.length) {
 		console.log("Mis-matching training set");
@@ -306,13 +306,13 @@ const normal_equation = function(X, y) {
 
 	/*
 		X = [[A, B],
-			 [C, D]];
+		[C, D]];
 
 		X.transposed = [[A ,C],
-						[B, D]];
+		[B, D]];
 
 		X * X.transposed = [[AA + BB, AC + BD],
-							[CA + DB, CC + DD]]
+		[CA + DB, CC + DD]]
 	*/
 	for (i = 0; i < num_feat; i++) {
 		for (j = 0; j < num_feat; j++) {
@@ -363,7 +363,6 @@ const normal_equation = function(X, y) {
 	}
 
 	return theta;
-}
+};
 
 export {get_invert, get_determinant, normal_equation};
-
