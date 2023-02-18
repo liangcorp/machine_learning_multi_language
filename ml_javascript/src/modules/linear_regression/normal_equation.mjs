@@ -30,7 +30,7 @@ const get_determinant = function(matrix) {
 		/*
 			Calculate the Determinant (der) of 2D matrix
 			M = [[A, B],
-			[C, D]]
+			     [C, D]]
 			Determinant = A * D - B * C
 		*/
 		determinant = matrix[0][0] * matrix[1][1]
