@@ -311,18 +311,15 @@ pub fn get_theta(x: &[Vec<f64>], y: &[f64]) -> Result<Box<Vec<f64>>, io::Error> 
     let mut mltply_rslt: Vec<Vec<f64>> = Vec::new();
     let mut mltply_rslt_row: Vec<f64> = Vec::new();
 
-    let num_train;
-    let num_feat;
-
     let mut sum: f64;
 
-    if x.len() == y.len() {
-        num_train = x.len();
+    let num_train = if x.len() == y.len() {
+        x.len()
     } else {
         return Err(Error::new(ErrorKind::Other, "Matrix not symmetrical"));
-    }
+    };
 
-    num_feat = x[0].len();
+    let num_feat = x[0].len();
 
     /*
         X = [[A, B],
@@ -344,7 +341,7 @@ pub fn get_theta(x: &[Vec<f64>], y: &[f64]) -> Result<Box<Vec<f64>>, io::Error> 
                 // loop for the rows
                 sum += z[i] * z[j];
             }
-            mltply_rslt_row.push(sum as f64); // results for each row
+            mltply_rslt_row.push(sum); // results for each row
         }
         mltply_rslt.push(mltply_rslt_row.clone());
     }
@@ -367,7 +364,7 @@ pub fn get_theta(x: &[Vec<f64>], y: &[f64]) -> Result<Box<Vec<f64>>, io::Error> 
         for i in 0..num_train {
             sum += x[i][j] * y[i];
         }
-        y_x_trans.push(sum as f64);
+        y_x_trans.push(sum);
     }
 
     /*

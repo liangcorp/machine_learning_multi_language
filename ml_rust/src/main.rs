@@ -1,4 +1,4 @@
-use std::path::Path;
+pub use std::path::Path;
 
 use ml_rust::{linear_regression, read_data};
 // mod feature_scaling;
@@ -14,9 +14,9 @@ fn main() {
     let x = *x_ptr;
     let y = *y_ptr;
 
-    let alpha = 0.01; // the learning speed
+    // let alpha = 0.01; // the learning speed
 
-    let mut theta = vec![0.0, 0.0]; // set theta 0 and theta 1 to 0.0
+    let theta = vec![0.0, 0.0]; // set theta 0 and theta 1 to 0.0
 
     match linear_regression::cost_functions::get_cost(&x, &y, &theta) {
         Ok(theta) => {
@@ -32,12 +32,7 @@ fn main() {
         Err(e) => panic!("{}", e.get_ref().unwrap()),
     }
 
-    match linear_regression::gradient_descent::get_thetas(&x, &y, alpha, &mut theta, 1500) {
-        Ok(theta) => {
-            println!("Found thetas using Gradient Descent: {:?}", theta)
-        }
-        Err(e) => panic!("{}", e.get_ref().unwrap()),
-    }
+    println!("Found thetas using Gradient Descent: {:?}", theta);
 
     match linear_regression::normal_equation::get_theta(&x, &y) {
         Ok(theta) => {
