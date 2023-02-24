@@ -9,37 +9,37 @@
 
 export const get_cost = function(X, y, theta) {
 
-	let i, j, num_train, sum;
+    let i, j, num_train, sum;
 
-	let num_feat = theta.length;
-	let h_x = [];
+    let num_feat = theta.length;
+    let h_x = [];
 
-	let j_theta = 0.0;
+    let j_theta = 0.0;
 
-	if (X.length === y.length) {
-		num_train = X.length;
-	}
-	else {
-		return -1;
-	}
+    if (X.length === y.length) {
+        num_train = X.length;
+    }
+    else {
+        return -1;
+    }
 
-	for (let x of X) {
-		if (x.length !== theta.length) {
-			return -2;
-		}
-	}
+    for (let x of X) {
+        if (x.length !== theta.length) {
+            return -2;
+        }
+    }
 
-	for (i = 0; i < num_train; i++) {
-		sum = 0.0;
-		for (j = 0; j < num_feat; j++) {
-			sum += X[i][j] * theta[j];
-		}
-		h_x.push(sum);
-	}
+    for (i = 0; i < num_train; i++) {
+        sum = 0.0;
+        for (j = 0; j < num_feat; j++) {
+            sum += X[i][j] * theta[j];
+        }
+        h_x.push(sum);
+    }
 
-	for (j = 0; j < num_train; j++){
-		j_theta += (h_x[j] - y[j]) ** 2 / (2 * num_train);
-	}
+    for (j = 0; j < num_train; j++) {
+        j_theta += (h_x[j] - y[j]) ** 2 / (2 * num_train);
+    }
 
-	return j_theta;
+    return j_theta;
 }
