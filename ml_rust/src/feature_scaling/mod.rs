@@ -4,11 +4,11 @@
 /// This is used on Y that is a 1D array.
 ///
 #[allow(dead_code)]
-pub fn mean_normal_single(v: &[f32]) -> (Box<Vec<f32>>, f32, f32) {
-    let mut max: f32;
-    let mut min: f32;
-    let mut result: Vec<f32> = Vec::new();
-    let mut sum: f32 = 0.0;
+pub fn mean_normal_single(v: &Vec<f64>) -> (Box<Vec<f64>>, f64, f64) {
+    let mut max: f64;
+    let mut min: f64;
+    let mut result: Vec<f64> = Vec::new();
+    let mut sum: f64 = 0.0;
 
     /* Set max and min for feature */
     max = v[0];
@@ -26,14 +26,14 @@ pub fn mean_normal_single(v: &[f32]) -> (Box<Vec<f32>>, f32, f32) {
         sum += *i;
     }
 
-    let mean = sum / v.len() as f32;
+    let mean = sum / v.len() as f64;
 
     sum = 0.0;
     for i in v.iter() {
         sum += (*i - mean) * (*i - mean);
     }
 
-    let std_dev = (sum / v.len() as f32).sqrt();
+    let std_dev = (sum / v.len() as f64).sqrt();
 
     for i in v.iter() {
         result.push((*i - mean) / std_dev);
@@ -56,20 +56,20 @@ pub fn mean_normal_single(v: &[f32]) -> (Box<Vec<f32>>, f32, f32) {
 /// NOTE: The values of first feature (i.e. x\[0\] is 1.0)
 ///
 #[allow(dead_code)]
-type DoubleVecF32 = Vec<Vec<f32>>;
+type DoubleVecF32 = Vec<Vec<f64>>;
 
-pub fn mean_normal_multiple(v: &[Vec<f32>]) -> (Box<DoubleVecF32>, Box<Vec<f32>>, Box<Vec<f32>>) {
-    let mut max: Vec<f32> = Vec::new();
-    let mut min: Vec<f32> = Vec::new();
-    let mut mean: Vec<f32> = Vec::new();
-    let mut std_dev: Vec<f32> = Vec::new();
+pub fn mean_normal_multiple(v: &[Vec<f64>]) -> (Box<DoubleVecF32>, Box<Vec<f64>>, Box<Vec<f64>>) {
+    let mut max: Vec<f64> = Vec::new();
+    let mut min: Vec<f64> = Vec::new();
+    let mut mean: Vec<f64> = Vec::new();
+    let mut std_dev: Vec<f64> = Vec::new();
 
     let mut result: DoubleVecF32 = v.to_vec();
 
     let row = v.len();
     let col = v[0].len();
 
-    let mut sum: f32;
+    let mut sum: f64;
 
     for i in v[0].iter() {
         max.push(*i);
@@ -94,7 +94,7 @@ pub fn mean_normal_multiple(v: &[Vec<f32>]) -> (Box<DoubleVecF32>, Box<Vec<f32>>
     }
 
     for j in mean.iter_mut().take(col).skip(1) {
-        *j /= row as f32;
+        *j /= row as f64;
     }
 
     std_dev.push(1.0);
@@ -105,7 +105,7 @@ pub fn mean_normal_multiple(v: &[Vec<f32>]) -> (Box<DoubleVecF32>, Box<Vec<f32>>
             sum += (i[j] - mean[j]) * (i[j] - mean[j]);
         }
 
-        std_dev.push((sum / v.len() as f32).sqrt());
+        std_dev.push((sum / v.len() as f64).sqrt());
     }
 
     for j in 1..col {
