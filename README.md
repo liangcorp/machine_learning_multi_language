@@ -1,12 +1,8 @@
 # Machine learning in multiple languages
 
-Implement machine learning formulas in C and rust.
-I usually implement in Rust first than C.
+Implement machine learning formulas in JavaScript
 
 Linear regression has been completed
 
 @TODO Logistic regression
 @TODO Neural network
-@TODO RESTful API for accepting remote requests
-
-Maybe I will port it into Javascript as well (after I learned Javascript).
