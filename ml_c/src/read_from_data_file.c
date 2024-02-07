@@ -48,9 +48,8 @@ data_t *read_from_data_file(char *file_name)
 		exit(EXIT_FAILURE);
 	}
 
-	while (!feof(fp)) {
+	while (fgets(str, 200, fp) != NULL) {
 		// Find number of training set
-		fgets(str, 200, fp);
 		m++;
 	}
 
@@ -66,63 +65,38 @@ data_t *read_from_data_file(char *file_name)
 
 	rewind(fp);
 
-#ifdef DEBUG
-	printf("Allocate memory for training set\n");
-#endif
-
 	X = calloc(m, sizeof(double));
-
-#ifdef DEBUG
-	printf("Allocate memory for features\n");
-#endif
 
 	for (i = 0; i < m; i++) {
 		X[i] = calloc(n, sizeof(double));
 	}
-
-#ifdef DEBUG
-	printf("Initialize the first features into 1.0\n");
-#endif
 
 	for (i = 0; i < m; i++) {
 		// Initialize the first features into 1.0
 		X[i][0] = 1.0L;
 	}
 
-#ifdef DEBUG
-	printf("Allocate memory for test set\n");
-#endif
 	y = calloc(m, sizeof(double));
 
 	i = 0;
+
 #ifdef DEBUG
-	printf("Read all but the last column into X");
+	printf("Read all but the last column into X\n");
 	printf("Read the last column into y\n");
 #endif
-	while (!feof(fp)) {
-		fgets(str, 200, fp); // Read line
-
+	while (fgets(str, 200, fp) != NULL) {
 		X[i][1] = strtod(strtok(str, ","), NULL);
 
-#ifdef DEBUG
-		printf("\t%lf  |  %lf  |", X[i][0], X[i][1]);
-#endif
 		for (j = 2; j < n; j++) {
 			// Read all but the last column into X
 			// Convert the string to double
 			X[i][j] = strtod(strtok(NULL, ","), NULL);
-#ifdef DEBUG
-			printf("  %lf  |", X[i][j]);
-#endif
 		}
 
 		// Read the last column into y
 		// Convert the string to double
 		y[i] = strtod(strtok(NULL, ","), NULL);
 
-#ifdef DEBUG
-		printf("  %lf\n", y[i]);
-#endif
 		i++; // Move to the next line
 	}
 
@@ -134,10 +108,6 @@ data_t *read_from_data_file(char *file_name)
 	data_set->y = y;
 	data_set->num_train = m;
 	data_set->num_feat = n;
-
-#ifdef DEBUG
-	printf("Closed file\n");
-#endif
 
 	return data_set;
 }
