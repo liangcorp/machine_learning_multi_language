@@ -67,17 +67,26 @@ data_t *read_from_data_file(char *file_name)
 	rewind(fp);
 
 #ifdef DEBUG
-	printf("Allocated memory for token\n");
+	printf("Allocate memory for token\n");
 #endif
 
 	X = calloc(m, sizeof(double));
+
+#ifdef DEBUG
+	printf("Allocate memory for elements\n");
+#endif
 
 	for (i = 0; i < m; i++) {
 		X[i] = calloc(n, sizeof(double));
 	}
 
+#ifdef DEBUG
+	printf("Initialize the first features into 1.0\n");
+#endif
+
 	for (i = 0; i < m; i++) {
-		X[i][0] = 1.0L; // Initialized the first features into 1
+		// Initialize the first features into 1.0
+		X[i][0] = 1.0L;
 	}
 
 	y = calloc(m, sizeof(double));
@@ -101,7 +110,11 @@ data_t *read_from_data_file(char *file_name)
 
 #ifdef DEBUG
 	for (i = 0; i < m; i++) {
-		printf("\t%lf\t |\t%lf\n", X[i], y[i]);
+		for (j = 0; j < n; j++) {
+			printf("\t%lf\t |", X[i][j]);
+		}
+
+		printf("\t%lf\n", y[i]);
 	}
 #endif
 

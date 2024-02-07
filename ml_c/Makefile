@@ -1,4 +1,4 @@
-CC = gcc
+CC = clang
 
 all:
 	mkdir -p bin libs
@@ -8,9 +8,9 @@ all:
 	${CC} -g -fPIC ./src/linear_regression/normal_equation.c -shared -o ./libs/liblrnorequa.so
 	${CC} -g -fPIC ./src/feature_scale.c -shared -o ./libs/libfeatscale.so
 	${CC} -g -I ./libs/ -c ./src/main.c -o ./libs/main.o
-	${CC} -g -o ./bin/main ./libs/main.o -L ./libs/ -lm -l lrcostfn -l lrgrades -l readdata -l featscale -l lrnorequa
+	${CC} -g -o ./bin/ml_c ./libs/main.o -L ./libs/ -lm -l lrcostfn -l lrgrades -l readdata -l featscale -l lrnorequa
 
-	chmod +x ./bin/main
+	chmod +x ./bin/ml_c
 
 debug:
 	mkdir -p bin libs
@@ -20,9 +20,9 @@ debug:
 	${CC} -D DEBUG -g -fPIC ./src/linear_regression/normal_equation.c -shared -o ./libs/liblrnorequa.so
 	${CC} -D DEBUG -g -fPIC ./src/feature_scale.c -shared -o ./libs/libfeatscale.so
 	${CC} -D DEBUG -g -I ./libs/ -c ./src/main.c -o ./libs/main.o
-	${CC} -g -o ./bin/main ./libs/main.o -L ./libs/ -lm -l lrgrades -l lrcostfn -l readdata -l featscale -l lrnorequa
+	${CC} -g -o ./bin/ml_c ./libs/main.o -L ./libs/ -lm -l lrgrades -l lrcostfn -l readdata -l featscale -l lrnorequa
 
-	chmod +x ./bin/main
+	chmod +x ./bin/ml_c
 
 timer:
 	mkdir -p bin libs
@@ -32,9 +32,9 @@ timer:
 	${CC} -D TIMER -g -fPIC ./src/linear_regression/normal_equation.c -shared -o ./libs/liblrnorequa.so
 	${CC} -D TIMER -g -fPIC ./src/feature_scale.c -shared -o ./libs/libfeatscale.so
 	${CC} -D TIMER -g -I ./libs/ -c ./src/main.c -o ./libs/main.o
-	${CC} -D TIMER -g -o ./bin/main ./libs/main.o -L ./libs/ -lm -l lrgrades -l lrcostfn -l readdata -l featscale -l lrnorequa
+	${CC} -D TIMER -g -o ./bin/ml_c ./libs/main.o -L ./libs/ -lm -l lrgrades -l lrcostfn -l readdata -l featscale -l lrnorequa
 
-	chmod +x ./bin/main
+	chmod +x ./bin/ml_c
 
 clean:
 	rm -rf ./bin/*
