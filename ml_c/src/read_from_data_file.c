@@ -95,37 +95,36 @@ data_t *read_from_data_file(char *file_name)
 	y = calloc(m, sizeof(double));
 
 	i = 0;
+#ifdef DEBUG
+	printf("Read all but the last column into X");
+	printf("Read the last column into y\n");
+#endif
 	while (!feof(fp)) {
-		fgets(str, 300, fp); // Read line
+		fgets(str, 200, fp); // Read line
+
+		X[i][1] = strtod(strtok(str, ","), NULL);
 
 #ifdef DEBUG
-        printf("Read all but the last column into X\n");
+		printf("\t%lf  |  %lf  |", X[i][0], X[i][1]);
 #endif
-		for (j = 1; j < n; j++) {
+		for (j = 2; j < n; j++) {
 			// Read all but the last column into X
 			// Convert the string to double
-			X[i][j] = strtod(strtok(str, ","), NULL);
+			X[i][j] = strtod(strtok(NULL, ","), NULL);
+#ifdef DEBUG
+			printf("  %lf  |", X[i][j]);
+#endif
 		}
 
-#ifdef DEBUG
-        printf("Read the last column into y\n");
-#endif
 		// Read the last column into y
 		// Convert the string to double
-		y[i] = strtod(strtok(str, ","), NULL);
-
-		i++; // Move to the next line
-	}
+		y[i] = strtod(strtok(NULL, ","), NULL);
 
 #ifdef DEBUG
-	for (i = 0; i < m; i++) {
-		for (j = 0; j < n; j++) {
-			printf("\t%lf\t |", X[i][j]);
-		}
-
-		printf("\t%lf\n", y[i]);
-	}
+		printf("  %lf\n", y[i]);
 #endif
+		i++; // Move to the next line
+	}
 
 	fclose(fp);
 	fp = NULL;
