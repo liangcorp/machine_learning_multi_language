@@ -4,5 +4,7 @@ Implement machine learning formulas in JavaScript
 
 Linear regression has been completed
 
-@TODO Logistic regression
-@TODO Neural network
+Works in C and Rust had been moved to their own repos.
+
+- [C](https://github.com/liangcorp/machine_learning_c)
+- [Rust](https://github.com/liangcorp/machine_learning_rust)
