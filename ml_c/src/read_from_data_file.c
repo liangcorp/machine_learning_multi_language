@@ -67,13 +67,13 @@ data_t *read_from_data_file(char *file_name)
 	rewind(fp);
 
 #ifdef DEBUG
-	printf("Allocate memory for token\n");
+	printf("Allocate memory for training set\n");
 #endif
 
 	X = calloc(m, sizeof(double));
 
 #ifdef DEBUG
-	printf("Allocate memory for elements\n");
+	printf("Allocate memory for features\n");
 #endif
 
 	for (i = 0; i < m; i++) {
@@ -89,21 +89,30 @@ data_t *read_from_data_file(char *file_name)
 		X[i][0] = 1.0L;
 	}
 
+#ifdef DEBUG
+	printf("Allocate memory for test set\n");
+#endif
 	y = calloc(m, sizeof(double));
 
 	i = 0;
 	while (!feof(fp)) {
-		fgets(str, 200, fp); // Read line
+		fgets(str, 300, fp); // Read line
 
+#ifdef DEBUG
+        printf("Read all but the last column into X\n");
+#endif
 		for (j = 1; j < n; j++) {
 			// Read all but the last column into X
 			// Convert the string to double
 			X[i][j] = strtod(strtok(str, ","), NULL);
 		}
 
+#ifdef DEBUG
+        printf("Read the last column into y\n");
+#endif
 		// Read the last column into y
 		// Convert the string to double
-		y[i] = strtod(strtok(NULL, ","), NULL);
+		y[i] = strtod(strtok(str, ","), NULL);
 
 		i++; // Move to the next line
 	}
