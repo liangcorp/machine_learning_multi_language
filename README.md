@@ -7,6 +7,7 @@ Linear regression has been completed
 Works in C, Rust and Zig had been moved to their own repos.
 
 - C
+- 
   Linear Regression - https://github.com/liangcorp/linear_regression_c
   
   Logistical Regression - https://github.com/liangcorp/logistic_regression_c
