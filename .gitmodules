@@ -4,3 +4,6 @@
 [submodule "machine_learning_rust"]
 	path = machine_learning_rust
 	url = ./machine_learning_rust/
+[submodule "machine_learning_python"]
+	path = machine_learning_python
+	url = ./machine_learning_python
