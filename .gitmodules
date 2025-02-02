@@ -1,0 +1,6 @@
+[submodule "machine_learning_c"]
+	path = machine_learning_c
+	url = ./machine_learning_c
+[submodule "machine_learning_rust"]
+	path = machine_learning_rust
+	url = ./machine_learning_rust/
