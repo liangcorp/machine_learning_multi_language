@@ -1,12 +1,12 @@
 [submodule "machine_learning_c"]
 	path = machine_learning_c
-	url = ./machine_learning_c
+	url = git@github.com:liangcorp/machine_learning_c.git
 [submodule "machine_learning_rust"]
 	path = machine_learning_rust
-	url = ./machine_learning_rust/
+	url = git@github.com:liangcorp/machine_learning_rust.git
 [submodule "machine_learning_python"]
 	path = machine_learning_python
-	url = ./machine_learning_python
+	url = git@github.com:liangcorp/machine_learning_python.git
 [submodule "linear_regression_javascript"]
 	path = linear_regression_javascript
-	url = ./linear_regression_javascript
+	url = git@github.com:liangcorp/linear_regression_javascript.git
