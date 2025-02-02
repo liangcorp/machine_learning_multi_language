@@ -7,3 +7,6 @@
 [submodule "machine_learning_python"]
 	path = machine_learning_python
 	url = ./machine_learning_python
+[submodule "linear_regression_javascript"]
+	path = linear_regression_javascript
+	url = ./linear_regression_javascript
