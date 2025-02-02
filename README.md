@@ -6,9 +6,9 @@ Works in C and Rust had been moved to their own repos.
 
 ## Javascript
 
-Implement machine learning formulas in JavaScript
+Implemented Linear Regression in JavaScript
 
-Linear regression has been completed
+Logistic Regression and Neural Network are low priority
 
 ## Tensorflow (lowest priority)
 
